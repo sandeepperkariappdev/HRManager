@@ -1,0 +1,13 @@
+@import '~antd/dist/antd.css';
+.App {
+  text-align: center;
+}
+.ant-form-item{
+  margin-bottom: 0px !important;
+}
+.zero-padding{
+  padding:  0px !important;
+}
+.color-white{
+  color:#fff;
+}

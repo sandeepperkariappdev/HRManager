@@ -1,0 +1,29 @@
+{
+  "name": "hrmanager",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "antd": "^3.9.3",
+    "firebase": "^5.5.1",
+    "moment": "^2.22.2",
+    "proptypes": "^1.1.0",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "react-redux": "^5.0.7",
+    "react-redux-firebase": "^2.1.8",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.5",
+    "redux": "^4.0.0",
+    "redux-form": "^7.4.2",
+    "redux-logger": "^3.0.6",
+    "redux-saga": "^0.16.0",
+    "validator": "^10.7.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
