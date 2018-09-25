@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
-import {  Layout, Row, Col, Card, Radio, Button, Collapse, Tabs, Input, InputNumber, Select, Upload, Icon } from 'antd';
+import {  Layout, Form, Row, Col, Card, Radio, Button, Collapse, Tabs, Input, InputNumber, Select, Upload, Icon } from 'antd';
 
 const { Header, Footer, Sider, Content } = Layout;
 const TabPane = Tabs.TabPane;
@@ -34,6 +34,7 @@ class CommentsDisplay extends Component {
         return null;
     };
     render() { 
+        const { comments } = this.state.taskSelected;
         return (<div>             
                 <Layout>
                 <Header className="zero-padding">
@@ -51,9 +52,28 @@ class CommentsDisplay extends Component {
                 <Content>       
                     <Card>             
                        <Collapse accordion>
-                            <Panel header="Comments" key="1">
-                                
-                            </Panel>                        
+                       {comments && (comments.map((item, i)=>{
+                           if(item.taskMsg !== ""){
+                            return (
+                                <Panel header="Comments" key={i}>
+                                    <Card>
+                                        <Form.Item label="Bussiness Comments">
+                                            <TextArea type="text" name="businessMsg" value={item.businessMsg} placeholder= "Add Task Comments if any" />                                   
+                                        </Form.Item>
+                                    </Card>
+                                    <Card>
+                                    <Form.Item label="Employee Comments">
+                                        <TextArea type="text" name="empMsg" value={item.empMsg}  placeholder= "Add Task Comments if any" />                                   
+                                        </Form.Item>
+                                    </Card>
+                                    <Card>
+                                    <Form.Item label="Task Comments">
+                                        <TextArea type="text" name="taskMsg" value={item.taskMsg} placeholder= "Add Task Comments if any" />                                   
+                                        </Form.Item>
+                                    </Card>                                
+                            </Panel>);    
+                           }                           
+                       }))}                            
                         </Collapse>
                     </Card>                   
                 </Content>
@@ -64,10 +84,11 @@ class CommentsDisplay extends Component {
 }
 
 const mapStateToProps = state => {
+    
     return {
-        isUserLoggedIn: state.Auth.isUserLoggedIn,
-        userObject: state.Auth.userObject,
-        taskSelected : state.EmpData.taskSelected
+        isUserLoggedIn: state.auth.loggedIn,
+        userObject: state.auth.user,
+        taskSelected : state.home.taskSelected
     };
 };
  
