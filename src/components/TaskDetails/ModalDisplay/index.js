@@ -33,7 +33,9 @@ class ModalDisplay extends Component {
     handleOk = (e) => {
         //this.setState({visible: false});
         //this.props.onModalClickParent(this.state.comments);
-        this.props.onHandleModalOkClicked(this.state.comments);
+        if(this.state.comments.taskToBeCmpDueDate !== "" && this.state.comments.taskCmpExpDueDate !== ""){
+            this.props.onHandleModalOkClicked(this.state.comments);
+        }        
     }
     
     handleCancel = (e) => {
@@ -49,15 +51,15 @@ class ModalDisplay extends Component {
     };
 
     onTaskDueDateChange = (e, date) => {
-        this.setState({
-            ...this.state.comments, taskToBeCmpDueDate: date,
-        });
+        let comments = Object.assign({}, this.state.comments);
+        comments["taskToBeCmpDueDate"] = date;
+        return this.setState({comments});
     };
 
     onTaskExpDateChange = (e, date) => {
-        this.setState({
-            ...this.state.comments, taskCmpExpDueDate: date,
-        });
+        let comments = Object.assign({}, this.state.comments);
+        comments["taskCmpExpDueDate"] = date;
+        return this.setState({comments});
     };
 
 

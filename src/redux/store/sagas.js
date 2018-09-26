@@ -114,10 +114,23 @@ function* submitCreateTaskToServer(action){
   }
 }
 
+function* submitSelectedTask(action){
+  const tasksDb = database.ref('tasks').orderByChild("empId").equalTo(action.task.empId);
+  return tasksDb.once("child_added", function(snapshot){
+        console.log(snapshot.val());
+        snapshot.ref.update(action.task);
+  });
+  // return tasksDb.on('value', function(snapshot){
+  //   //snapshot would have list of NODES that satisfies the condition
+  //   console.log(snapshot.val());
+  //   snapshot.ref.update(action.task);
+  // });
+}
 export default function* rootSaga(params){
   yield takeEvery(Types.LOGIN_USER, fetchLoginUser);
   yield takeEvery(Types.LOGOUT_USER, fetchLogoutUser);
   yield all([takeLatest(Types.GET_EMPLOYEE_LIST, getTasksList)]);
+  yield all([takeLatest(Types.TASK_DETAILS_SAVE_DATABASE, submitSelectedTask)]);
   //yield takeEvery(Types.GET_EMPLOYEE_LIST, getTasksList);
   yield fork(createTaskItemSaga);
   //yield fork(updatedItemSaga);

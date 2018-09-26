@@ -101,8 +101,8 @@ class FromEmployee extends Component {
     }
     
     componentDidMount() {
-        if(this.props.taskSelected.empDetails){
-            let empDetails =  this.props.taskSelected.empDetails;
+        if(this.props.taskSelected){
+            let empDetails =  Object.assign({}, this.state.empDetails, this.props.taskSelected);
             this.setState({empDetails})
         }
     }    

@@ -26,10 +26,10 @@ export const getTaskByEmpId =(empId) =>({
     type: Types.GET_TASK_BY_EMPID,
     empId
 });
-export const taskDetailsSaveToFirebaseDatabase = (taskSelected) => {
+export const taskDetailsSaveToFirebaseDatabase = (task) => {
     return {
         type: Types.TASK_DETAILS_SAVE_DATABASE,
-        taskSelected
+        task
     };
 };
 export const getTaskDetailsFromFirebase = () => ({

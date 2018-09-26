@@ -202,6 +202,8 @@ export default (state = initialState, action) => {
            return handleEmployeeListServerResponseSuccess(state, action);
       case Type.GET_EMPLOYEE_LIST_ERROR_RESPONSE :
            return handleEmployeeListServerResponseError(state, action);
+      case Type.TASK_DETAILS_SAVE_DATABASE:
+          return { ...state};
       default :
             return { ...state};
     }
