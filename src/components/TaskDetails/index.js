@@ -12,6 +12,8 @@ import H1bDocumentsPrep from './H1bDocumentsPrep';
 import FromEmployee from './FromEmployee';
 import Recruiter from './Recruiter';
 import LCA from './LCA';
+import CommentsModalWindow from './CommentsModalWindow';
+
 import { taskDetailsSaveToFirebaseDatabase, getTaskByEmpId } from "../../redux/actions/home";
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -25,6 +27,7 @@ class TaskDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            commentsVisible:false,
             taskSelected:{}            
         }
     };
@@ -86,6 +89,15 @@ class TaskDetails extends Component {
         // return this.setState({workLocation});
     };
         
+    onHandleCommentsModalCanceledClicked = () => {
+        this.setState({commentsVisible: false});
+    }
+    onHandleCommentsModalOkClicked = (dataFromModal) => {
+        this.setState({commentsVisible: false});
+    }
+    onCommentsButtonClicked = () =>{
+        this.setState({commentsVisible: true});
+    }
 
     render() {
         const { modeHor } = 'top';
@@ -94,10 +106,12 @@ class TaskDetails extends Component {
         if(this.state.taskSelected === undefined || this.state.taskSelected  === undefined || this.state.taskSelected.workInfo === undefined){
             return (<div></div>);    
         } else{
+        const { commentsVisible } =  this.state;
         const { workLocation } =  this.state.taskSelected.workInfo; 
         return (
             <div>             
                 <Layout>
+                 {commentsVisible && (<CommentsModalWindow {...this.props} isVisible={commentsVisible} onHandleCommentsModalCanceledClicked={this.onHandleCommentsModalCanceledClicked}  onHandleCommentsModalOkClicked={this.onHandleCommentsModalOkClicked}/>)}   
                 <Header className="zero-padding">
                     <Row>
                         <Col xs={6} sm={6} md={6} lg={6} xl={6}>   
@@ -109,7 +123,8 @@ class TaskDetails extends Component {
                             <h3 className="color-white">Task Details</h3>
                         </Col>
                         <Col xs={4} sm={4} md={4} lg={4} xl={4}>   
-                            <Link to={{ pathname: "/commentsDisplay" }}>Comments</Link>
+                            {/* <Link to={{ pathname: "/commentsDisplay" }}>Comments</Link> */}
+                            <h3 className="color-white" onClick={this.onCommentsButtonClicked}>Comments</h3>
                         </Col>
                     </Row>                                        
                 </Header>

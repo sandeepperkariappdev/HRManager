@@ -233,10 +233,9 @@ class Recruiter extends Component {
                                 </Card>
                             </Col>
                         </Row>
-
-                        <ModalDisplay {...this.props} onModalClickParent={this.onModalClick}/>
-                        
-                        <br />
+                        <Row>
+                            <ModalDisplay {...this.props} isVisible={visible} onHandleModalOkClicked={this.onHandleModalOkClicked} onHandleModalCanceledClicked = {this.onHandleModalCanceledClicked} />                      
+                        </Row> 
                         <Row>
                             <Col>   
                                 <div>

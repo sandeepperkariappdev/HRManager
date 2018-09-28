@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import InlineError from '../../messages/InlineError';
-import { Modal, Form, Input, Row, Col, Button, DatePicker, Card} from 'antd';
+import { Modal, Form, Input, Row, Col, Button, DatePicker, Card, Alert} from 'antd';
+import moment from 'moment';
 
 const { TextArea } = Input;
 
@@ -10,6 +11,8 @@ class ModalDisplay extends Component {
         super(props);
         this.state = { 
             visible: false,
+            showError:false,
+            errorMessage:"",
             comments:{
                 taskMsg:"",
                 empMsg:"",
@@ -33,9 +36,12 @@ class ModalDisplay extends Component {
     handleOk = (e) => {
         //this.setState({visible: false});
         //this.props.onModalClickParent(this.state.comments);
-        if(this.state.comments.taskToBeCmpDueDate !== "" && this.state.comments.taskCmpExpDueDate !== ""){
+        if(this.state.comments.taskToBeCmpDueDate !== "" && this.state.comments.taskCmpExpDueDate !== "" && this.state.comments.taskAssignedTo !== ""){
+            this.state.comments.createdAt = moment().format("mm/dd/yyyy");
             this.props.onHandleModalOkClicked(this.state.comments);
-        }        
+        } else{
+            this.setState({showError:true, errorMessage:"Enter the Dates and Assign the Task before closing"}); 
+        }
     }
     
     handleCancel = (e) => {
@@ -62,11 +68,14 @@ class ModalDisplay extends Component {
         return this.setState({comments});
     };
 
-
+    onErrorClose= () => {
+        this.setState({showError:false});
+    }
     render() { 
-        const { errors, comments } = this.state;
+        const { errors, comments, errorMessage, showError } = this.state;
         return ( 
             <div>
+                {showError && (<Alert message="Error" description={errorMessage} type="error" closable onClose={this.onErrorClose} />)} 
                 <Row>
                     <Col>
                             {/* <Button type="primary" onClick={this.showModal}>
