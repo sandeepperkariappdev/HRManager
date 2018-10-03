@@ -250,7 +250,7 @@ class EmpStatus extends Component {
                     "venContPhone":"",
                 }
             }  
-         }
+        }
     }
 
     componentDidMount(){
@@ -298,10 +298,7 @@ class EmpStatus extends Component {
         this.setState({workLocationVisible: true});
     }
 
-    render() { 
-        console.log("hii1");
-        console.log("hii2");
-        console.log("hii3");
+    render() {         
         const { current,  errors, commentsVisible, workLocationVisible } = this.state;
         const { workLocation }  = this.state.taskData.business.step1.workInfo;
         const { clientAddress} = this.state.taskData.business.step1.clientInfo;
@@ -344,7 +341,7 @@ class EmpStatus extends Component {
         return ( 
             <Layout>
                  {commentsVisible && (<EmpStatusModalWindow {...this.props} isVisible={commentsVisible} onHandleCommentsModalCanceledClicked={this.onHandleCommentsModalCanceledClicked}  onHandleCommentsModalOkClicked={this.onHandleCommentsModalOkClicked}/>)}   
-                 {workLocationVisible && (<WorkLocationModalWindow {...this.props} isVisible={workLocationVisible} onHandleWorkLocationModalCanceledClicked={this.onHandleWorkLocationModalCanceledClicked}  onHandleWorkLocationModalOkClicked={this.onHandleWorkLocationModalOkClicked}/>)}   
+                 {workLocationVisible && (<WorkLocationModalWindow {...this.props} business={business} isVisible={workLocationVisible} onHandleWorkLocationModalCanceledClicked={this.onHandleWorkLocationModalCanceledClicked}  onHandleWorkLocationModalOkClicked={this.onHandleWorkLocationModalOkClicked}/>)}   
                 <Header className="zero-padding">
                     <Row>
                         <Col xs={6} sm={6} md={6} lg={6} xl={6}>                               
@@ -371,84 +368,27 @@ class EmpStatus extends Component {
                                         <Timeline.Item>
                                             <div>
                                                 <Row>
-                                                    <Col>Can you verify the below Work Location information ?: <b>{business.step1.taskActive ? 'NOT COMPLETED': 'COMPLETED' }</b></Col>
-                                                </Row>
-                                                <Row>
-                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                                        <Card title="WorkLocation">
-                                                            <Form.Item error={!!errors.workLocation.address1}  label="Address1" className= "firstName">                                 
-                                                                <Input type="text" name="address1" value= {workLocation.address1} onChange={this.onChange} placeholder="Address 1"  /> 
-                                                                {errors.workLocation.address1 && <InlineError text= {errors.workLocation.address1}/>}
-                                                            </Form.Item>
-                                                            <Form.Item error={!!errors.workLocation.address2}  label="Address2" className= "firstName">
-                                                                <Input type="text" name="address2" value= {workLocation.address2} onChange={this.onChange} placeholder="Address 2"  /> 
-                                                                {errors.workLocation.address2 && <InlineError text= {errors.workLocation.address2}/>}
-                                                            </Form.Item>
-                                                            <Form.Item error={!!errors.workLocation.city}  label="City" className= "firstName">
-                                                                <Input type="text" name="city" value= {workLocation.city} onChange={this.onChange} placeholder="city"  /> 
-                                                                {errors.workLocation.city && <InlineError text= {errors.workLocation.city}/>}
-                                                            </Form.Item>
-                                                            <Form.Item error={!!errors.workLocation.state}  label="State" className= "firstName">
-                                                                <Input type="text" name="state" value= {workLocation.state} onChange={this.onChange} placeholder="state"  /> 
-                                                                {errors.workLocation.state && <InlineError text= {errors.workLocation.state}/>}
-                                                            </Form.Item>
-                                                            <Form.Item error={!!errors.workLocation.zipCode}  label="ZipCode" className= "firstName">
-                                                                <Input type="text" name="zipCode" value= {workLocation.zipCode} onChange={this.onChange} placeholder="zipCode"  /> 
-                                                                {errors.workLocation.zipCode && <InlineError text= {errors.workLocation.zipCode}/>}
-                                                            </Form.Item>
-                                                        </Card>
-                                                    </Col>
-                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                                        <Card title="Vendor">
-                                                                        {/* <Form.Item error={!!errors.vendorAgreement} label="Agreement signed by Vendor?">                                            
-                                                                            <RadioGroup name="vendorAgreement" options={options} onChange={this.onVendorInfoChange}  />
-                                                                            {errors.vendorAgreement && <InlineError text= {errors.vendorAgreement}/>}
-                                                                        </Form.Item> */}
-                                                                        <Form.Item error={!!errors.vendorInfo.vendorName} label="Vendor Name">
-                                                                            <Input type="vendorName" name="vendorName"value= {vendorInfo.vendorName} onChange={this.onVendorInfoChange} placeholder="Vendor Name" />
-                                                                            {errors.vendorInfo.vendorName && <InlineError text= {errors.vendorInfo.vendorName}/>}
-                                                                        </Form.Item>
-                                                                        <Form.Item error={!!errors.vendorInfo.vendorContact} label="Vendor Phone">
-                                                                            <Input type="vendorContact" name="vendorContact" value={vendorInfo.vendorContact} onChange={this.onVendorInfoChange} placeholder= "(000) 000-0000"/>
-                                                                            {errors.vendorInfo.vendorContact && <InlineError text= {errors.vendorInfo.vendorContact}/>}
-                                                                        </Form.Item>
-                                                                        <Form.Item error={!!errors.vendorInfo.venContName} label="Vendor Contact Person">
-                                                                            <Input type="venContName" name="venContName"value= {vendorInfo.venContName} onChange={this.onVendorInfoChange} placeholder="Vendor Contact Name" />
-                                                                            {errors.vendorInfo.venContName && <InlineError text= {errors.vendorInfo.venContName}/>}
-                                                                        </Form.Item>
-                                                                        <Form.Item error={!!errors.vendorInfo.venContPhone} label="Vendor Contact Person Phone">
-                                                                            <Input type="venContPhone" name="venContPhone" value={vendorInfo.venContPhone} onChange={this.onVendorInfoChange} placeholder= "(000) 000-0000" />
-                                                                            {errors.vendorInfo.venContPhone && <InlineError text= {errors.vendorInfo.venContPhone}/>}
-                                                                        </Form.Item>
-                                                        </Card>
-                                                    </Col>
-                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                                        <Card title="Client Address">                            
-                                                            <Form.Item error={!!errors.clientAddress.address1}  label="Address1" className= "firstName">
-                                                                <Input type="text" name="address1" value= {clientAddress.address1} onChange={this.onChange} placeholder="Address 1"  /> 
-                                                                {errors.clientAddress.address1 && <InlineError text= {errors.clientAddress.address1}/>}
-                                                            </Form.Item>
-                                                            <Form.Item error={!!errors.clientAddress.address1}  label="Address2" className= "firstName">
-                                                                <Input type="text" name="address2" value= {clientAddress.address2} onChange={this.onChange} placeholder="Address 2"  /> 
-                                                                {errors.clientAddress.address1 && <InlineError text= {errors.clientAddress.address1}/>}
-                                                            </Form.Item>
-                                                            <Form.Item error={!!errors.clientAddress.city} label="City" className= "firstName">
-                                                                <Input type="text" name="city" value= {clientAddress.city} onChange={this.onChange} placeholder="city"  /> 
-                                                                {errors.clientAddress.city && <InlineError text= {errors.clientAddress.city}/>}
-                                                            </Form.Item>
-                                                            <Form.Item error={!!errors.clientAddress.state}  label="State" className= "firstName">
-                                                                <Input type="text" name="state" value= {clientAddress.state} onChange={this.onChange} placeholder="state"  /> 
-                                                                {errors.clientAddress.state && <InlineError text= {errors.clientAddress.state}/>}
-                                                            </Form.Item>
-                                                            <Form.Item error={!!errors.clientAddress.zipCode}  label="ZipCode" className= "firstName">
-                                                                <Input type="text" name="zipCode" value= {clientAddress.zipCode} onChange={this.onChange} placeholder="zipCode"  /> 
-                                                                {errors.clientAddress.zipCode && <InlineError text= {errors.clientAddress.zipCode}/>}
-                                                            </Form.Item>
-                                                        </Card>
-                                                    </Col>
-                                                </Row>                
+                                                    <Col>Can you verify the below Work Location information ?: <b>{business.step1.taskActive ? 'NOT COMPLETED': 'COMPLETED' }</b><button onClick={this.onWorkLocationButtonClicked}>Show Work Location</button></Col>
+                                                </Row>                                                              
                                             </div>
-                                            </Timeline.Item>                                        
+                                            </Timeline.Item>   
+                                            <Timeline.Item>Is Recruiter Information Submitted?: <b>{business.step2.taskActive ? 'NOT COMPLETED': 'COMPLETED' }</b></Timeline.Item>                                     
+                                            <Timeline.Item>Roles Responsibilities Submitted by Employee: <b>{business.step3.rolesRespSubmittedByEmp ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>Roles Responsibilities Verified: <b>{business.step3.rolesRespVerified? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>Info Updated to portal by Business:<b> {business.step3.infoUptdToPortalByBiz? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>Review of Uncertified LCA: <b>{business.step3.reviewUnCertLCA? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>LCA Filed for Certification:<b> {business.step3.lcaFiledForCert? 'COMPLETED': 'NOT COMPLETED'}</b></Timeline.Item>
+                                            <Timeline.Item>LCA Sent to Employee: <b>{business.step3.lcaSentToEmployee? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>Employee's Vendor Letter Received?: <b>{business.step4.recvdVendorLtrFrmEmp ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>Employee's Client Letter Received?: <b>{business.step4.recvdClntLtrFrmEmp ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>All of the Employee's H4 Documents Received?: <b>{business.step4.recvdAllH4DocsFrmEmp ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>All of the Employee's H4 Dep Documents Received?: <b>{business.step4.recvdAllH4DepDocsFrmEmp ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>All of the Employee's H1 Documents Received?: <b>{business.step4.recvdAllH1bDocsFrmEmp ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>Employee's Documents Reviewed by HR?: <b>{business.step5.hrRecvdAllDocsAndReviewdFromEmp ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>Did Attorney Receive All Documents from Business?: <b>{business.step6.attroneyReceivedAllDocsFromBusiness ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>Did Attorney Review All Documents from Business?: <b>{business.step7.attroneyReviewedAllDocsFromBusiness ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>Did Attorney File for Petition?: <b>{business.step8.attroneyFilesPetiton ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>Did Attorney Update Fedex Number?: <b>{business.step8.attroneyUpdatedFedexNumber ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
                                     </Timeline>
                                     </Card>)}
                                 {(current === 1) &&(<Card>
@@ -489,7 +429,6 @@ class EmpStatus extends Component {
                                     <Timeline.Item>Did Attorney File for Petition?: <b>{business.step8.attroneyFilesPetiton ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
                                     <Timeline.Item>Did Attorney Update Fedex Number?: <b>{business.step8.attroneyUpdatedFedexNumber ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
                                     </Timeline>)}
-
                             </div>                        
                             </Card>
                             <Card>
@@ -528,3 +467,74 @@ const mapStateToProps = state => {
 };
  
 export default connect(mapStateToProps)(EmpStatus);
+
+// <Row>
+// <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+//     <Card title="WorkLocation">
+//         <Form.Item error={!!errors.workLocation.address1}  label="Address1" className= "firstName">                                 
+//             <Input type="text" name="address1" value= {workLocation.address1} onChange={this.onChange} placeholder="Address 1"  /> 
+//             {errors.workLocation.address1 && <InlineError text= {errors.workLocation.address1}/>}
+//         </Form.Item>
+//         <Form.Item error={!!errors.workLocation.address2}  label="Address2" className= "firstName">
+//             <Input type="text" name="address2" value= {workLocation.address2} onChange={this.onChange} placeholder="Address 2"  /> 
+//             {errors.workLocation.address2 && <InlineError text= {errors.workLocation.address2}/>}
+//         </Form.Item>
+//         <Form.Item error={!!errors.workLocation.city}  label="City" className= "firstName">
+//             <Input type="text" name="city" value= {workLocation.city} onChange={this.onChange} placeholder="city"  /> 
+//             {errors.workLocation.city && <InlineError text= {errors.workLocation.city}/>}
+//         </Form.Item>
+//         <Form.Item error={!!errors.workLocation.state}  label="State" className= "firstName">
+//             <Input type="text" name="state" value= {workLocation.state} onChange={this.onChange} placeholder="state"  /> 
+//             {errors.workLocation.state && <InlineError text= {errors.workLocation.state}/>}
+//         </Form.Item>
+//         <Form.Item error={!!errors.workLocation.zipCode}  label="ZipCode" className= "firstName">
+//             <Input type="text" name="zipCode" value= {workLocation.zipCode} onChange={this.onChange} placeholder="zipCode"  /> 
+//             {errors.workLocation.zipCode && <InlineError text= {errors.workLocation.zipCode}/>}
+//         </Form.Item>
+//     </Card>
+// </Col>
+// <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+//     <Card title="Vendor">                    
+//                     <Form.Item error={!!errors.vendorInfo.vendorName} label="Vendor Name">
+//                         <Input type="vendorName" name="vendorName"value= {vendorInfo.vendorName} onChange={this.onVendorInfoChange} placeholder="Vendor Name" />
+//                         {errors.vendorInfo.vendorName && <InlineError text= {errors.vendorInfo.vendorName}/>}
+//                     </Form.Item>
+//                     <Form.Item error={!!errors.vendorInfo.vendorContact} label="Vendor Phone">
+//                         <Input type="vendorContact" name="vendorContact" value={vendorInfo.vendorContact} onChange={this.onVendorInfoChange} placeholder= "(000) 000-0000"/>
+//                         {errors.vendorInfo.vendorContact && <InlineError text= {errors.vendorInfo.vendorContact}/>}
+//                     </Form.Item>
+//                     <Form.Item error={!!errors.vendorInfo.venContName} label="Vendor Contact Person">
+//                         <Input type="venContName" name="venContName"value= {vendorInfo.venContName} onChange={this.onVendorInfoChange} placeholder="Vendor Contact Name" />
+//                         {errors.vendorInfo.venContName && <InlineError text= {errors.vendorInfo.venContName}/>}
+//                     </Form.Item>
+//                     <Form.Item error={!!errors.vendorInfo.venContPhone} label="Vendor Contact Person Phone">
+//                         <Input type="venContPhone" name="venContPhone" value={vendorInfo.venContPhone} onChange={this.onVendorInfoChange} placeholder= "(000) 000-0000" />
+//                         {errors.vendorInfo.venContPhone && <InlineError text= {errors.vendorInfo.venContPhone}/>}
+//                     </Form.Item>
+//     </Card>
+// </Col>
+// <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+//     <Card title="Client Address">                            
+//         <Form.Item error={!!errors.clientAddress.address1}  label="Address1" className= "firstName">
+//             <Input type="text" name="address1" value= {clientAddress.address1} onChange={this.onChange} placeholder="Address 1"  /> 
+//             {errors.clientAddress.address1 && <InlineError text= {errors.clientAddress.address1}/>}
+//         </Form.Item>
+//         <Form.Item error={!!errors.clientAddress.address1}  label="Address2" className= "firstName">
+//             <Input type="text" name="address2" value= {clientAddress.address2} onChange={this.onChange} placeholder="Address 2"  /> 
+//             {errors.clientAddress.address1 && <InlineError text= {errors.clientAddress.address1}/>}
+//         </Form.Item>
+//         <Form.Item error={!!errors.clientAddress.city} label="City" className= "firstName">
+//             <Input type="text" name="city" value= {clientAddress.city} onChange={this.onChange} placeholder="city"  /> 
+//             {errors.clientAddress.city && <InlineError text= {errors.clientAddress.city}/>}
+//         </Form.Item>
+//         <Form.Item error={!!errors.clientAddress.state}  label="State" className= "firstName">
+//             <Input type="text" name="state" value= {clientAddress.state} onChange={this.onChange} placeholder="state"  /> 
+//             {errors.clientAddress.state && <InlineError text= {errors.clientAddress.state}/>}
+//         </Form.Item>
+//         <Form.Item error={!!errors.clientAddress.zipCode}  label="ZipCode" className= "firstName">
+//             <Input type="text" name="zipCode" value= {clientAddress.zipCode} onChange={this.onChange} placeholder="zipCode"  /> 
+//             {errors.clientAddress.zipCode && <InlineError text= {errors.clientAddress.zipCode}/>}
+//         </Form.Item>
+//     </Card>
+// </Col>
+// </Row>

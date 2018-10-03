@@ -239,18 +239,11 @@ class WorkLocationModalWindow extends Component {
     componentDidUpdate(prevProps, prevState, snapshot){        
     };
     componentDidMount() {      
-
+        if(this.props.business){
+            this.setState((state, props) => ({ business :  props.business}));
+        }
     };
-    static getDerivedStateFromProps(nextProps, prevState) {                       
-        if(nextProps.isUserLoggedIn){
-            if(nextProps.taskSelected){
-                if(Object.keys(nextProps.taskSelected).length > 0){
-                    return { taskSelected :  nextProps.taskSelected };
-                }        
-            }
-        } else{
-           // nextProps.history.push("/login");
-        }               
+    static getDerivedStateFromProps(nextProps, prevState) {                                            
         return null;
     };
     handleOk = (e) => {
@@ -264,7 +257,7 @@ class WorkLocationModalWindow extends Component {
         const { workLocation }  = this.state.business.step1.workInfo;
         const { clientAddress} = this.state.business.step1.clientInfo;
         const { clientInfo, vendorInfo } = this.state.business.step1;  
-        const { errors } = this.state
+        const { errors } = this.state;
         return ( 
             <div>
                 <Row>
