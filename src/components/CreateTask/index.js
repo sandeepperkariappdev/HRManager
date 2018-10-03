@@ -6,7 +6,6 @@ import InlineError from '../messages/InlineError';
 import { Collapse, Form, Tabs, Layout, Menu, Input, Row, Col, Button, DatePicker, Radio, Card} from 'antd';
 import { Link } from "react-router-dom";
 import moment from 'moment';
-
 import { createTaskSubmit } from "../../redux/actions/createTask";
 
 const Panel = Collapse.Panel;
@@ -38,9 +37,7 @@ const taskPrioity = [
     { label: 'medium', value: '3' },
     { label: 'low', value: '4' },
 ];
-
 const RadioGroup = Radio.Group;
-
 const { TextArea } = Input;
 
 class CreateTask extends Component {
@@ -51,8 +48,8 @@ class CreateTask extends Component {
                 empId: moment().valueOf(),
                 firstName: 'itemFN',
                 lastName: 'itemLN',
-                emailId01: 'itemFN.itemLN@rsrit.com',
-                emailId02: 'itemLN.itemFN@rsrit.com',
+                primaryEmailId: 'test1emp@rsrit.com',
+                secondaryEmailId: 'itemLN.itemFN@rsrit.com',
                 phoneNo: '1112223333',
                 contDetails:{
                   address1:'ghvvhvh',
@@ -144,9 +141,9 @@ class CreateTask extends Component {
     };
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        //if(nextProps.isTaskCreated){
-        //    nextProps.history.push("/home");
-        //}
+        if(nextProps.isTaskCreated){
+           nextProps.history.push("/home");
+        }
         return null;
       }
 
@@ -224,8 +221,12 @@ class CreateTask extends Component {
     onSubmit = () => {
     //const errors = this.validate(this.state.empDetails);
     // if(Object.keys(errors).length===0){
-        // this.props.submit(this.state.data);             
-        this.props.dispatch(createTaskSubmit(this.state.empDetails));
+        // this.props.submit(this.state.data); 
+        let data = {};
+        data.empDetails= this.state.empDetails;
+        data.empId = this.state.empDetails.empId;
+        data.primaryEmailId = this.state.empDetails.primaryEmailId;
+        this.props.dispatch(createTaskSubmit(data));
     //}
     };
 
@@ -306,179 +307,179 @@ class CreateTask extends Component {
                     </Header>
                     <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>                                    
                         <Collapse accordion>
-                    {/* Employee Registration */}
-                    <Panel header="Employee Registration" key="1">
-                        <Form>
-                        <Row>
-                            <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                <Card title="Employee Details">
-                                <Form.Item error={!!errors.firstName}  label="First Name" className= "firstName">
-                                    <Input id="firstName" type="text" name="firstName" value= {empDetails.firstName} onChange={this.onChange} placeholder="First Name" />
-                                        {errors.firstName && <InlineError text= {errors.firstName}/>}
-                                </Form.Item>
-
-                                <Form.Item error={!!errors.lastName} label="Last Name">
-                                    <Input id="lastName" type="text" name="lastName" value= {empDetails.lastName} onChange={this.onChange} placeholder="Last Name" />
-                                    {errors.lastName && <InlineError text= {errors.lastName}/>}
-                                </Form.Item>
-
-                                <Form.Item error={!!errors.emailId01} label="Primary Email:">
-                                    <Input id="emailId01" type="text" name="emailId01" value= {empDetails.emailId01} onChange={this.onChange} placeholder="Primary Email" />
-                                    {errors.emailId01 && <InlineError text= {errors.emailId01}/>}
-                                </Form.Item>
-
-                                <Form.Item error={!!errors.emailId02} label="Secondary Email:">
-                                    <Input id="emailId02" type="text" name="emailId02" value= {empDetails.emailId02}onChange={this.onChange} placeholder="Secondary Email" />
-                                    {errors.emailId02 && <InlineError text= {errors.emailId02}/>}
-                                </Form.Item>
-
-                                <Form.Item error={!!errors.phoneNo} label="Phone Number:">
-                                    <Input id="phoneNo" type="number" max={10} name="phoneNo" value={empDetails.phoneNo}onChange={this.onChange} placeholder= "(000) 000-0000"/>
-                                    {errors.phoneNo && <InlineError text= {errors.phoneNo}/>}
-                                </Form.Item>
-
-                                </Card>
-                            </Col>
-                            <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                <Card title="Contact Details">
-                                    
-                                    <Form.Item error={!!errors.address1}  label="Address 1">
-                                            <Input id="address1" type="address1" name="address1"value= {empDetails.contDetails.address1} onChange={this.onContactChange} placeholder="Address 1" />
-                                            {errors.address1 && <InlineError text= {errors.address1}/>}
-                                    </Form.Item>
-
-                                    <Form.Item error={!!errors.address2}  label="Address 2">
-                                        <Input id="address2" type="address2" name="address2"value= {empDetails.contDetails.address2} onChange={this.onContactChange} placeholder="Address 2" />
-                                        {errors.address2 && <InlineError text= {errors.address2}/>}
-                                    </Form.Item>
-
-                                    <Form.Item error={!!errors.city}  label="City">
-                                        <Input id="city" type="city" name="city"value= {empDetails.contDetails.city} onChange={this.onContactChange}placeholder="City" />
-                                        {errors.city && <InlineError text= {errors.city}/>}
-                                    </Form.Item>
-
-                                    <Form.Item error={!!errors.state}  label="State">
-                                            <Input id="state" type="state" name="state"  value= {empDetails.contDetails.state} onChange={this.onContactChange} placeholder="State" />
-                                            {errors.state && <InlineError text= {errors.state}/>}
-                                    </Form.Item>
-
-                                    <Form.Item error={!!errors.zipCode}  label="Zip Code">
-                                            <Input  id="zipCode" type="zipCode" name="zipCode" value={empDetails.contDetails.zipCode}onChange={this.onContactChange} placeholder= "Enter Your Zipcode"/>
-                                            {errors.zipCode && <InlineError text= {errors.zipCode}/>}
-                                    </Form.Item>
-
-                                </Card>
-                            </Col>
-                        </Row>
-
-                        </Form>
-                    </Panel>
-                    {/* WorkInfo */}
-                    <Panel header="Work Related Information" key="2">
-                        <Form>
-                        <Row>
-                            <Col >
-                                <Card title="Work Location">
-                                    <Form.Item error={!!errors.address1} label="Address 1">
-                                            <Input id="address1" type="text" name="address1"value= {empDetails.workInfo.workLocation.address1} onChange={this.onWorkLocationChange} placeholder="Address 1" />
-                                            {errors.address1 && <InlineError text= {errors.address1}/>}
-                                    </Form.Item>
-                                    <Form.Item error={!!errors.address2}  label="Address 2">
-                                            <Input id="address2" type="text" name="address2" value= {empDetails.workInfo.workLocation.address2} onChange={this.onWorkLocationChange} placeholder="Address 2" />
-                                            {errors.address2 && <InlineError text= {errors.address2}/>}
-                                    </Form.Item>
-                                    <Form.Item error={!!errors.city}  label="City">
-                                        <Input id="city" type="text" name="city" value= {empDetails.workInfo.workLocation.city} onChange={this.onWorkLocationChange}placeholder="City" />
-                                        {errors.city && <InlineError text= {errors.city}/>}
-                                    </Form.Item>
-                                    <Form.Item error={!!errors.state}  label="State">
-                                        <Input id="state" type="text" name="state" value= {empDetails.workInfo.workLocation.state} onChange={this.onWorkLocationChange} placeholder="State" />
-                                        {errors.state && <InlineError text= {errors.state}/>}
-                                    </Form.Item>
-                                    <Form.Item error={!!errors.zipCode}  label="Zip Code">
-                                        <Input id="zipCode" type="number" name="zipCode" value={empDetails.workInfo.workLocation.zipCode}onChange={this.onWorkLocationChange} placeholder= "Enter Your Zipcode"/>
-                                        {errors.zipCode && <InlineError text= {errors.zipCode}/>}
-                                    </Form.Item>
-
-                                </Card>
-                            </Col>
-                        </Row>
-                        </Form>
-                    </Panel>
-                    {/* ClientInfo */}
-                    <Panel header="Client Related Information" key="3">
-                    <Form>
-                        <Row>
-                            <Col>
-                                <Card title="Client Details">
-                                    <Form.Item error={!!errors.clientName} label="Client Name">
-                                            <Input id="clientName" type="clientName" name="clientName"value= {empDetails.clientInfo.clientName} onChange={this.onClientInfoChange} placeholder="Client Name" />
-                                            {errors.clientName && <InlineError text= {errors.clientName}/>}
-                                    </Form.Item>
-                                    <Form.Item error={!!errors.managerName}  label="Manager Name">
-                                            <Input id="managerName" type="text" name="managerName" value= {empDetails.clientInfo.managerName} onChange={this.onClientInfoChange} placeholder="Manager First Last" />
-                                            {errors.managerName && <InlineError text= {errors.managerName}/>}
-                                    </Form.Item>
-                                    <Form.Item error={!!errors.address1} label="Address 1">
-                                            <Input id="address1" type="text" name="address1"value= {empDetails.clientInfo.clientAddress.address1} onChange={this.onClientAddressChange} placeholder="Address 1" />
-                                            {errors.address1 && <InlineError text= {errors.address1}/>}
-                                    </Form.Item>
-                                    <Form.Item error={!!errors.address2} label="Address 2">
-                                            <Input id="address2" type="text" name="address2" value= {empDetails.clientInfo.clientAddress.address2} onChange={this.onClientAddressChange} placeholder="Address 2" />
-                                            {errors.address2 && <InlineError text= {errors.address2}/>}
-                                    </Form.Item>
-                                    <Form.Item error={!!errors.city} label="City">
-                                            <Input id="city" type="text" name="city"value= {empDetails.clientInfo.clientAddress.city} onChange={this.onClientAddressChange} placeholder="City" />
-                                            {errors.city && <InlineError text= {errors.city}/>}
-                                    </Form.Item>
-                                    <Form.Item error={!!errors.state} label="State">
-                                            <Input id="state" type="text" name="state" value= {empDetails.clientInfo.clientAddress.state} onChange={this.onClientAddressChange} placeholder="State" />
-                                            {errors.state && <InlineError text= {errors.state}/>}
-                                    </Form.Item>
-                                    <Form.Item error={!!errors.zipCode} label="Zip Code">
-                                            <Input id="zipCode" type="number" name="zipCode" value={empDetails.clientInfo.clientAddress.zipCode} onChange={this.onClientAddressChange} placeholder= "Enter Your Zipcode"/>
-                                            {errors.zipCode && <InlineError text= {errors.zipCode}/>}
-                                    </Form.Item>
-
-                                </Card>
-                            </Col>
-                        </Row>
-
-                    </Form>
-                    </Panel>
-                    {/* VendorInfo */}
-                    <Panel header="Vendor Related Information" key="4">
-                        <Form>
-                            <Row>
-                                <Col>
-                                    <Card title="Vendor Details">
-                                        {/* <Form.Item error={!!errors.vendorAgreement} label="Agreement signed by Vendor?">                                            
-                                            <RadioGroup name="vendorAgreement" options={options} onChange={this.onVendorInfoChange}  />
-                                            {errors.vendorAgreement && <InlineError text= {errors.vendorAgreement}/>}
-                                        </Form.Item> */}
-                                        <Form.Item error={!!errors.vendorName} label="Vendor Name">
-                                            <Input id="vendorName" type="vendorName" name="vendorName"value= {empDetails.vendorInfo.vendorName} onChange={this.onVendorInfoChange} placeholder="Vendor Name" />
-                                            {errors.vendorName && <InlineError text= {errors.vendorName}/>}
+                            {/* Employee Registration */}
+                            <Panel header="Employee Registration" key="1">
+                                <Form>
+                                <Row>
+                                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                                        <Card title="Employee Details">
+                                        <Form.Item error={!!errors.firstName}  label="First Name" className= "firstName">
+                                            <Input id="firstName" type="text" name="firstName" value= {empDetails.firstName} onChange={this.onChange} placeholder="First Name" />
+                                                {errors.firstName && <InlineError text= {errors.firstName}/>}
                                         </Form.Item>
-                                        <Form.Item error={!!errors.vendorContact} label="Vendor Phone">
-                                            <Input id="vendorContact" type="number" maxLength="10" name="vendorContact" value={empDetails.vendorInfo.vendorContact} onChange={this.onVendorInfoChange} placeholder= "(000) 000-0000"/>
-                                            {errors.vendorContact && <InlineError text= {errors.vendorContact}/>}
+
+                                        <Form.Item error={!!errors.lastName} label="Last Name">
+                                            <Input id="lastName" type="text" name="lastName" value= {empDetails.lastName} onChange={this.onChange} placeholder="Last Name" />
+                                            {errors.lastName && <InlineError text= {errors.lastName}/>}
                                         </Form.Item>
-                                        <Form.Item error={!!errors.venContName} label="Vendor Contact Person">
-                                            <Input id="venContName" type="text" name="venContName"value= {empDetails.vendorInfo.venContName} onChange={this.onVendorInfoChange} placeholder="Vendor Contact Name" />
-                                             {errors.venContName && <InlineError text= {errors.venContName}/>}
+
+                                        <Form.Item error={!!errors.primaryEmailId} label="Primary Email:">
+                                            <Input id="primaryEmailId" type="text" name="primaryEmailId" value= {empDetails.primaryEmailId} onChange={this.onChange} placeholder="Primary Email" />
+                                            {errors.primaryEmailId && <InlineError text= {errors.primaryEmailId}/>}
                                         </Form.Item>
-                                        <Form.Item error={!!errors.venContPhone} label="Vendor Contact Person Phone">
-                                            <Input id="venContPhone" type="number" maxLength="10"  name="venContPhone" value={empDetails.vendorInfo.venContPhone} onChange={this.onVendorInfoChange} placeholder= "(000) 000-0000" />
-                                            {errors.venContPhone && <InlineError text= {errors.venContPhone}/>}
+
+                                        <Form.Item error={!!errors.secondaryEmailId} label="Secondary Email:">
+                                            <Input id="secondaryEmailId" type="text" name="secondaryEmailId" value= {empDetails.secondaryEmailId} onChange={this.onChange} placeholder="Secondary Email" />
+                                            {errors.secondaryEmailId && <InlineError text= {errors.secondaryEmailId}/>}
                                         </Form.Item>
-                                    </Card>
-                                </Col>
-                            </Row>
-                        </Form>
-                    </Panel>
-                    {/* Recruiter */}
-                    <Panel header=" Recruiter Related Information" key="5">
+
+                                        <Form.Item error={!!errors.phoneNo} label="Phone Number:">
+                                            <Input id="phoneNo" type="number" max={10} name="phoneNo" value={empDetails.phoneNo}onChange={this.onChange} placeholder= "(000) 000-0000"/>
+                                            {errors.phoneNo && <InlineError text= {errors.phoneNo}/>}
+                                        </Form.Item>
+
+                                        </Card>
+                                    </Col>
+                                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                                        <Card title="Contact Details">
+                                            
+                                            <Form.Item error={!!errors.address1}  label="Address 1">
+                                                    <Input id="address1" type="address1" name="address1"value= {empDetails.contDetails.address1} onChange={this.onContactChange} placeholder="Address 1" />
+                                                    {errors.address1 && <InlineError text= {errors.address1}/>}
+                                            </Form.Item>
+
+                                            <Form.Item error={!!errors.address2}  label="Address 2">
+                                                <Input id="address2" type="address2" name="address2"value= {empDetails.contDetails.address2} onChange={this.onContactChange} placeholder="Address 2" />
+                                                {errors.address2 && <InlineError text= {errors.address2}/>}
+                                            </Form.Item>
+
+                                            <Form.Item error={!!errors.city}  label="City">
+                                                <Input id="city" type="city" name="city"value= {empDetails.contDetails.city} onChange={this.onContactChange}placeholder="City" />
+                                                {errors.city && <InlineError text= {errors.city}/>}
+                                            </Form.Item>
+
+                                            <Form.Item error={!!errors.state}  label="State">
+                                                    <Input id="state" type="state" name="state"  value= {empDetails.contDetails.state} onChange={this.onContactChange} placeholder="State" />
+                                                    {errors.state && <InlineError text= {errors.state}/>}
+                                            </Form.Item>
+
+                                            <Form.Item error={!!errors.zipCode}  label="Zip Code">
+                                                    <Input  id="zipCode" type="zipCode" name="zipCode" value={empDetails.contDetails.zipCode}onChange={this.onContactChange} placeholder= "Enter Your Zipcode"/>
+                                                    {errors.zipCode && <InlineError text= {errors.zipCode}/>}
+                                            </Form.Item>
+
+                                        </Card>
+                                    </Col>
+                                </Row>
+
+                                </Form>
+                            </Panel>
+                            {/* WorkInfo */}
+                            <Panel header="Work Related Information" key="2">
+                                <Form>
+                                <Row>
+                                    <Col >
+                                        <Card title="Work Location">
+                                            <Form.Item error={!!errors.address1} label="Address 1">
+                                                    <Input id="address1" type="text" name="address1"value= {empDetails.workInfo.workLocation.address1} onChange={this.onWorkLocationChange} placeholder="Address 1" />
+                                                    {errors.address1 && <InlineError text= {errors.address1}/>}
+                                            </Form.Item>
+                                            <Form.Item error={!!errors.address2}  label="Address 2">
+                                                    <Input id="address2" type="text" name="address2" value= {empDetails.workInfo.workLocation.address2} onChange={this.onWorkLocationChange} placeholder="Address 2" />
+                                                    {errors.address2 && <InlineError text= {errors.address2}/>}
+                                            </Form.Item>
+                                            <Form.Item error={!!errors.city}  label="City">
+                                                <Input id="city" type="text" name="city" value= {empDetails.workInfo.workLocation.city} onChange={this.onWorkLocationChange}placeholder="City" />
+                                                {errors.city && <InlineError text= {errors.city}/>}
+                                            </Form.Item>
+                                            <Form.Item error={!!errors.state}  label="State">
+                                                <Input id="state" type="text" name="state" value= {empDetails.workInfo.workLocation.state} onChange={this.onWorkLocationChange} placeholder="State" />
+                                                {errors.state && <InlineError text= {errors.state}/>}
+                                            </Form.Item>
+                                            <Form.Item error={!!errors.zipCode}  label="Zip Code">
+                                                <Input id="zipCode" type="number" name="zipCode" value={empDetails.workInfo.workLocation.zipCode}onChange={this.onWorkLocationChange} placeholder= "Enter Your Zipcode"/>
+                                                {errors.zipCode && <InlineError text= {errors.zipCode}/>}
+                                            </Form.Item>
+
+                                        </Card>
+                                    </Col>
+                                </Row>
+                                </Form>
+                            </Panel>
+                            {/* ClientInfo */}
+                            <Panel header="Client Related Information" key="3">
+                            <Form>
+                                <Row>
+                                    <Col>
+                                        <Card title="Client Details">
+                                            <Form.Item error={!!errors.clientName} label="Client Name">
+                                                    <Input id="clientName" type="clientName" name="clientName"value= {empDetails.clientInfo.clientName} onChange={this.onClientInfoChange} placeholder="Client Name" />
+                                                    {errors.clientName && <InlineError text= {errors.clientName}/>}
+                                            </Form.Item>
+                                            <Form.Item error={!!errors.managerName}  label="Manager Name">
+                                                    <Input id="managerName" type="text" name="managerName" value= {empDetails.clientInfo.managerName} onChange={this.onClientInfoChange} placeholder="Manager First Last" />
+                                                    {errors.managerName && <InlineError text= {errors.managerName}/>}
+                                            </Form.Item>
+                                            <Form.Item error={!!errors.address1} label="Address 1">
+                                                    <Input id="address1" type="text" name="address1"value= {empDetails.clientInfo.clientAddress.address1} onChange={this.onClientAddressChange} placeholder="Address 1" />
+                                                    {errors.address1 && <InlineError text= {errors.address1}/>}
+                                            </Form.Item>
+                                            <Form.Item error={!!errors.address2} label="Address 2">
+                                                    <Input id="address2" type="text" name="address2" value= {empDetails.clientInfo.clientAddress.address2} onChange={this.onClientAddressChange} placeholder="Address 2" />
+                                                    {errors.address2 && <InlineError text= {errors.address2}/>}
+                                            </Form.Item>
+                                            <Form.Item error={!!errors.city} label="City">
+                                                    <Input id="city" type="text" name="city"value= {empDetails.clientInfo.clientAddress.city} onChange={this.onClientAddressChange} placeholder="City" />
+                                                    {errors.city && <InlineError text= {errors.city}/>}
+                                            </Form.Item>
+                                            <Form.Item error={!!errors.state} label="State">
+                                                    <Input id="state" type="text" name="state" value= {empDetails.clientInfo.clientAddress.state} onChange={this.onClientAddressChange} placeholder="State" />
+                                                    {errors.state && <InlineError text= {errors.state}/>}
+                                            </Form.Item>
+                                            <Form.Item error={!!errors.zipCode} label="Zip Code">
+                                                    <Input id="zipCode" type="number" name="zipCode" value={empDetails.clientInfo.clientAddress.zipCode} onChange={this.onClientAddressChange} placeholder= "Enter Your Zipcode"/>
+                                                    {errors.zipCode && <InlineError text= {errors.zipCode}/>}
+                                            </Form.Item>
+
+                                        </Card>
+                                    </Col>
+                                </Row>
+
+                            </Form>
+                            </Panel>
+                            {/* VendorInfo */}
+                            <Panel header="Vendor Related Information" key="4">
+                                <Form>
+                                    <Row>
+                                        <Col>
+                                            <Card title="Vendor Details">
+                                                {/* <Form.Item error={!!errors.vendorAgreement} label="Agreement signed by Vendor?">                                            
+                                                    <RadioGroup name="vendorAgreement" options={options} onChange={this.onVendorInfoChange}  />
+                                                    {errors.vendorAgreement && <InlineError text= {errors.vendorAgreement}/>}
+                                                </Form.Item> */}
+                                                <Form.Item error={!!errors.vendorName} label="Vendor Name">
+                                                    <Input id="vendorName" type="vendorName" name="vendorName"value= {empDetails.vendorInfo.vendorName} onChange={this.onVendorInfoChange} placeholder="Vendor Name" />
+                                                    {errors.vendorName && <InlineError text= {errors.vendorName}/>}
+                                                </Form.Item>
+                                                <Form.Item error={!!errors.vendorContact} label="Vendor Phone">
+                                                    <Input id="vendorContact" type="number" maxLength="10" name="vendorContact" value={empDetails.vendorInfo.vendorContact} onChange={this.onVendorInfoChange} placeholder= "(000) 000-0000"/>
+                                                    {errors.vendorContact && <InlineError text= {errors.vendorContact}/>}
+                                                </Form.Item>
+                                                <Form.Item error={!!errors.venContName} label="Vendor Contact Person">
+                                                    <Input id="venContName" type="text" name="venContName"value= {empDetails.vendorInfo.venContName} onChange={this.onVendorInfoChange} placeholder="Vendor Contact Name" />
+                                                    {errors.venContName && <InlineError text= {errors.venContName}/>}
+                                                </Form.Item>
+                                                <Form.Item error={!!errors.venContPhone} label="Vendor Contact Person Phone">
+                                                    <Input id="venContPhone" type="number" maxLength="10"  name="venContPhone" value={empDetails.vendorInfo.venContPhone} onChange={this.onVendorInfoChange} placeholder= "(000) 000-0000" />
+                                                    {errors.venContPhone && <InlineError text= {errors.venContPhone}/>}
+                                                </Form.Item>
+                                            </Card>
+                                        </Col>
+                                    </Row>
+                                </Form>
+                            </Panel>
+                            {/* Recruiter */}
+                            <Panel header=" Recruiter Related Information" key="5">
                         <Form>  
                         <Row>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} >
@@ -546,12 +547,12 @@ class CreateTask extends Component {
                         </Row>
                         </Form>
                     </Panel>
-                    <Form>
-                        <Form.Item>
-                            <Button type="primary" onClick={this.onSubmit}>Submit</Button>
-                        </Form.Item>
-                    </Form>
-                </Collapse>
+                            <Form>
+                                <Form.Item>
+                                    <Button type="primary" onClick={this.onSubmit}>Submit</Button>
+                                </Form.Item>
+                            </Form>
+                    </Collapse>
                     </Content>
                 </Layout> 
             </div>

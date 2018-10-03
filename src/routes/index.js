@@ -16,10 +16,7 @@ export default () => {
     <BrowserRouter>
       <Switch>
         <Route exact path="/login" render={props => <Login {...props} />} />
-        {/* <Route exact path="/home/:id" render={props => <Home {...props} />} /> */}
         <Route exact path="/taskDetails/:id" render={props => <TaskDetails {...props} />} />
-        {/* <Route exact path="/signup" render={props => <Signup {...props} />} /> */}
-        {/* <Route exact path="/employeeRegister" render={props => <Employee {...props} />} /> */}
         <Route exact path="/home" render={props => <Home {...props} />} />
         <Route exact path="/createTask" render={props => <CreateTask {...props} />} />
         <Route exact path="/empStatus" render={props => <EmpStatus {...props} />} />

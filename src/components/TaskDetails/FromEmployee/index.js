@@ -12,8 +12,8 @@ class FromEmployee extends Component {
                 "empId":"",
                 "firstName": "",
                 "lastName": "",
-                "emailId01": "",
-                "emailId02": "",
+                "primaryEmailId": "",
+                "secondaryEmailId": "",
                 "phoneNo": "",
                 "contDetails":{
                     "address1":"",
@@ -102,7 +102,7 @@ class FromEmployee extends Component {
     
     componentDidMount() {
         if(this.props.taskSelected){
-            let empDetails =  Object.assign({}, this.state.empDetails, this.props.taskSelected);
+            let empDetails =  Object.assign({}, this.state.empDetails, this.props.taskSelected.empDetails);
             this.setState({empDetails})
         }
     }    
@@ -159,13 +159,13 @@ class FromEmployee extends Component {
                                 <Input type="text" name="lastName" value= {empDetails.lastName} onChange={this.onChange} placeholder="LastName"  /> 
                                 {errors.lastName && <InlineError text= {errors.lastName}/>}
                             </Form.Item>
-                            <Form.Item error={!!errors.emailId01}  label="Primary Email" className= "firstName">
-                                <Input type="text" name="emailId01" value= {empDetails.emailId01} onChange={this.onChange} placeholder="Primary Email"  /> 
-                                {errors.emailId01 && <InlineError text= {errors.emailId01}/>}
+                            <Form.Item error={!!errors.primaryEmailId}  label="Primary Email" className= "firstName">
+                                <Input type="text" name="primaryEmailId" value= {empDetails.primaryEmailId} onChange={this.onChange} placeholder="Primary Email"  /> 
+                                {errors.primaryEmailId && <InlineError text= {errors.primaryEmailId}/>}
                             </Form.Item>
-                            <Form.Item error={!!errors.emailId02}  label="Secondary Email" className= "firstName">
-                                <Input type="text" name="emailId02" value={empDetails.emailId02} onChange={this.onChange} placeholder="Secondary Email"  /> 
-                                {errors.emailId02 && <InlineError text= {errors.emailId02}/>}
+                            <Form.Item error={!!errors.secondaryEmailId}  label="Secondary Email" className= "firstName">
+                                <Input type="text" name="secondaryEmailId" value={empDetails.secondaryEmailId} onChange={this.onChange} placeholder="Secondary Email"  /> 
+                                {errors.secondaryEmailId && <InlineError text= {errors.secondaryEmailId}/>}
                             </Form.Item>
                             <Form.Item error={!!errors.phoneNo}  label="Phone Number" className= "firstName">
                                 <Input type="text" name="phoneNo" value= {empDetails.phoneNo} onChange={this.onChange} placeholder="PhoneNo"  /> 

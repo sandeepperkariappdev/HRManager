@@ -3,7 +3,7 @@ import * as Types from '../actions/types';
 //import {getCreateIncTranSucResp, getUpdatedIncTranSucResp, getIncTranListSucResp}  from "../actions/Incentives";
 //import * as API from '../config';
 import { eventChannel } from 'redux-saga';
-import {loginUserSuccess, loginUserFailure} from '../actions/auth';
+import {loginUserSuccess, loginUserFailure, validateUserSuccess, validateUserFailure} from '../actions/auth';
 import {createTaskServerSuccess, createTaskServerFailure} from '../actions/createTask';
 import {getTaskListSuccessResponse, getUpdatedTaskListSuccessResponse} from '../actions/home';
 //import { db, auth } from '../firebase';
@@ -126,12 +126,34 @@ function* submitSelectedTask(action){
   //   snapshot.ref.update(action.task);
   // });
 }
+function createEventChannelToFindUserInEmpList(loggedInUserEmail){
+    const listener = eventChannel(emit => {      
+        database.ref('tasks').orderByChild("primaryEmailId").equalTo(loggedInUserEmail)
+        .on('value', (data) => {
+          if(data.val()){
+            return emit(data.val())
+          } else{//if Business User, emp is not found
+            return emit({});
+          }          
+        });
+            return () => database.ref('tasks').off(listener);
+    });
+    return listener; 
+}
+
+function* validateLoggedInUser(action){
+  const getDataChannel = createEventChannelToFindUserInEmpList(action.response.user.email);
+  while(true) {
+      const item = yield take(getDataChannel); 
+      yield put(validateUserSuccess(item));    
+  }  
+} 
+
 export default function* rootSaga(params){
   yield takeEvery(Types.LOGIN_USER, fetchLoginUser);
   yield takeEvery(Types.LOGOUT_USER, fetchLogoutUser);
   yield all([takeLatest(Types.GET_EMPLOYEE_LIST, getTasksList)]);
   yield all([takeLatest(Types.TASK_DETAILS_SAVE_DATABASE, submitSelectedTask)]);
-  //yield takeEvery(Types.GET_EMPLOYEE_LIST, getTasksList);
   yield fork(createTaskItemSaga);
-  //yield fork(updatedItemSaga);
+  yield all([takeLatest(Types.LOGIN_USER_SERVER_RESPONSE_SUCCESS,  validateLoggedInUser)]);
 }

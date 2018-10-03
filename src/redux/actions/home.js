@@ -32,6 +32,3 @@ export const taskDetailsSaveToFirebaseDatabase = (task) => {
         task
     };
 };
-export const getTaskDetailsFromFirebase = () => ({
-    type:Types.GET_TASK_DETAILS
-})

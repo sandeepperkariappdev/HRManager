@@ -37,10 +37,22 @@ const taskObject = {
       taskName:"Employee",
       taskActive:"true",
       actionAssignedTo:"",
+      isTaskCompleted:false,
+      showAccordion:true,
+      isTaskDependent:false,
+      dependencyReason:"",
+      verifiedWrkLocation:false,
+      offerSignedLetter:false,
+      vendorLetterSubmitted:false,
+      clientLetterSubmitted:false,
     },
     step2:{
       taskName:"Recruiter",
-      taskActive:"true",
+      taskActive:false,
+      isTaskCompleted:false,
+      isTaskDependent:false,
+      showAccordion:true,
+      dependencyReason:"",
       actionAssignedTo:"",
       projectStartDate:"",
       vendorAgreement: "",
@@ -58,7 +70,11 @@ const taskObject = {
     },
     step3:{
       taskName:"LCA",
-      taskActive:"true",
+      taskActive:false,
+      isTaskCompleted:false,
+      isTaskDependent:false,
+      showAccordion:true,
+      dependencyReason:"",
       actionAssignedTo:"",
       dependencies:"",
       empVerWorkLocation:"",
@@ -88,7 +104,11 @@ const taskObject = {
     },
     step4:{
       taskName:"H1bDocumentsPrep",
-      taskActive:"true",
+      taskActive:false,
+      isTaskCompleted:false,
+      isTaskDependent:false,
+      showAccordion:true,
+      dependencyReason:"",
       actionAssignedTo:"",
       dependencies:"",
       recvdVendorLtrFrmEmp:"",  
@@ -114,7 +134,11 @@ const taskObject = {
     },
     step5:{
       taskName:"H1bDocumentsHRReview",
-      taskActive:"true",
+      taskActive:false,
+      isTaskCompleted:false,
+      isTaskDependent:false,
+      showAccordion:true,
+      dependencyReason:"",
       actionAssignedTo:"",
       dependencies:"",
       hrRecvdAllDocsAndReviewdFromEmp:"",
@@ -123,7 +147,11 @@ const taskObject = {
     },
     step6:{
       taskName:"AttorneyReceivedDocs",
-      taskActive:"true",
+      taskActive:false,
+      isTaskCompleted:false,
+      isTaskDependent:false,
+      showAccordion:true,
+      dependencyReason:"",
       actionAssignedTo:"",
       dependencies:"",
       attroneyReceivedAllDocsFromBusiness:"",
@@ -132,7 +160,11 @@ const taskObject = {
     },
     step7:{
       taskName:"AttorneyReviewedDocs",
-      taskActive:"true",
+      taskActive:false,
+      isTaskCompleted:false,
+      isTaskDependent:false,
+      showAccordion:true,
+      dependencyReason:"",
       actionAssignedTo:"",
       dependencies:"",
       attroneyReviewedAllDocsFromBusiness:"",
@@ -141,7 +173,11 @@ const taskObject = {
     },
     step8:{
       taskName:"AttorneyFilesPetiton",
-      taskActive:"true",
+      taskActive:false,
+      isTaskCompleted:false,
+      isTaskDependent:false,
+      showAccordion:true,
+      dependencyReason:"",
       actionAssignedTo:"",
       dependencies:"",
       attroneyFilesPetiton:"",
@@ -184,7 +220,7 @@ const handleEmployeeListServerResponseError = (state, action) => {
 const getTaskByEmpId = (state, action) => {
   let newState = {};
   newState = Object.assign({}, state, { taskSelected : Object.assign( taskObject, state.taskList.find((item) => {      
-            return item.empId.toString() === action.empId.toString()
+            return item.empDetails.empId.toString() === action.empId.toString()
         }))
     });
   return {...newState};

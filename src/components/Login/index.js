@@ -26,7 +26,7 @@ class Login extends Component {
 
     static getDerivedStateFromProps(props, state) {
         if (props.isUserLoggedIn) {            
-            if(state.data.isBusiness){
+            if(props.isBusiness){
                 props.history.push("/home");
             } else{
                 props.history.push("/empStatus");
@@ -70,9 +70,9 @@ class Login extends Component {
                                 <Input id="password" type="password" name="password" value= {data.password} onChange={this.onChange} placeholder="Make it Secure" />
                             {errors.password && <InlineError text= {errors.password}/>}
                         </Form.Item>
-                        <Checkbox name="isBusiness" checked={data.isBusiness} onChange={this.onChange}>Business</Checkbox>
+                        {/* <Checkbox name="isBusiness" checked={data.isBusiness} onChange={this.onChange}>Business</Checkbox> */}
                         <Button type="primary" onClick={this.onSubmit}>Submit</Button>   
-                        <p><Link to={{pathname: "/signup"}}>SignUp</Link></p>
+                        {/* <p><Link to={{pathname: "/signup"}}>SignUp</Link></p> */}
                     </Form>
                 </Card>
             </div>
@@ -86,7 +86,8 @@ Login.propTypes = {
 const mapStateToProps = state => {
     return {
         isUserLoggedIn: state.auth.loggedIn,
-        userObject: state.auth.user
+        userObject: state.auth.user,
+        isBusiness: state.auth.isBusiness
     };
 };
  

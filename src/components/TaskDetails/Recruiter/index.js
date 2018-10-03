@@ -80,7 +80,6 @@ class Recruiter extends Component {
 
     componentDidMount() {
         if(this.props.taskSelected.business){
-            //let step2 =  this.props.taskSelected.business.step2;
             let step2 = Object.assign(this.props.taskSelected.business.step2, this.props.taskSelected.empDetails.recruiter)
             this.setState({step2})
         }
@@ -93,9 +92,6 @@ class Recruiter extends Component {
     }
 
     onProjectStartDateChange = (e, date) => {
-        // this.setState({
-        //     ...this.state.step2, projectStartDate: date,
-        // });     
         let step2 = Object.assign({}, this.state.step2);
         step2["projectStartDate"] = moment(date).valueOf();
         return this.setState({step2});   
@@ -103,7 +99,7 @@ class Recruiter extends Component {
 
     onRecruiterChange = (e) => {
         let step2 = Object.assign({}, this.state.step2);
-        step2[e.target.name] = [e.target.value];
+        step2[e.target.name] = e.target.value;
         return this.setState({step2});
     };
     onTaskInfoChange = (e) => {
@@ -116,9 +112,6 @@ class Recruiter extends Component {
         return this.setState({taskInfo});
     };
     onPlacementDateChange = (e, date) => {
-        // this.setState({
-        //     ...this.state.step2, placementDate: date,
-        // });
         let step2 = Object.assign({}, this.state.step2);
         step2["placementDate"] = moment(date).valueOf();
         return this.setState({step2});
@@ -126,9 +119,6 @@ class Recruiter extends Component {
 
 
     onDocsCollectingStartDateChange = (e, date) => {
-        // this.setState({
-        //     ...this.state.step2, docsCollectingStartDate: date,
-        // });
         let step2 = Object.assign({}, this.state.step2);
         step2["docsCollectingStartDate"] = moment(date).valueOf();
         return this.setState({step2});

@@ -15,9 +15,17 @@ export const loginUserSuccess = (response) => ({
   type:Types.LOGIN_USER_SERVER_RESPONSE_SUCCESS,
   response
 })
+export const validateUserSuccess = (response) => ({
+  type:Types.VALIDATE_USER_SERVER_RESPONSE_SUCCESS,
+  response
+})
+export const validateUserFailure = (response) => ({
+  type:Types.VALIDATE_USER_SERVER_RESPONSE_ERROR,
+  response
+})
 
 export const loginUserFailure = (response) => ({
-  type:Types.LOGIN_USER_SERVER_REPONSE_ERROR,
+  type:Types.LOGIN_USER_SERVER_RESPONSE_ERROR,
   response
 })
 

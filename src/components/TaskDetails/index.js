@@ -13,7 +13,6 @@ import FromEmployee from './FromEmployee';
 import Recruiter from './Recruiter';
 import LCA from './LCA';
 import CommentsModalWindow from './CommentsModalWindow';
-
 import { taskDetailsSaveToFirebaseDatabase, getTaskByEmpId } from "../../redux/actions/home";
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -53,6 +52,7 @@ class TaskDetails extends Component {
     onEmpDetailsSubmit = (data, key) => {
         let taskSelected = this.state.taskSelected;
         taskSelected[key] = data;
+        taskSelected["business"]["step1"] = Object.assign({},taskSelected["business"]["step1"], data);
         this.setState({taskSelected});
     }
     onRadioButtonChange=(e)=>{        
@@ -100,14 +100,18 @@ class TaskDetails extends Component {
     }
 
     render() {
-        const { modeHor } = 'top';
+        console.log("hello");
+        console.log("hello");
+        console.log("hello");
+        const { modeHor } = 'top';        
         const { modeVer } = 'left';
         const radioStyle = { display: 'block', height: '30px', lineHeight: '30px'};
-        if(this.state.taskSelected === undefined || this.state.taskSelected  === undefined || this.state.taskSelected.workInfo === undefined){
+        if(this.state.taskSelected === undefined || this.state.taskSelected  === undefined || this.state.taskSelected.empDetails === undefined || this.state.taskSelected.empDetails.workInfo === undefined){
             return (<div></div>);    
         } else{
         const { commentsVisible } =  this.state;
-        const { workLocation } =  this.state.taskSelected.workInfo; 
+        const { workLocation } =  this.state.taskSelected.empDetails.workInfo; 
+        const{ business } = this.state.taskSelected;
         return (
             <div>             
                 <Layout>
@@ -131,29 +135,29 @@ class TaskDetails extends Component {
                 <Content>       
                     <Card>             
                        <Collapse accordion>
-                        <Panel header="From Employee" key="1">
+                        <Panel header="From Employee" key="1" disabled={!business.step1.showAccordion} forceRender={business.step1.showAccordion}>
                             <FromEmployee  {...this.props} onCommentsSubmit={this.onCommentsSubmit} onEmpDetailsSubmit={this.onEmpDetailsSubmit} />
                         </Panel>
-                        <Panel header="From Recruiter" key="2">
+                        <Panel header="From Recruiter" key="2" disabled={!business.step2.showAccordion} forceRender={business.step2.showAccordion}>
                                 <Recruiter {...this.props} onAccordionSubmit={this.onAccordionSubmit}
                                 onTaskInfoSubmit={this.onTaskInfoSubmit} onCommentsSubmit={this.onCommentsSubmit}/>
                         </Panel>
-                        <Panel header="LCA Documents and Application for Certification" key="3">
+                        <Panel header="LCA Documents and Application for Certification" key="3" disabled={!business.step3.showAccordion} forceRender={business.step3.showAccordion}>
                                 <LCA {...this.props} onAccordionSubmit={this.onAccordionSubmit} onCommentsSubmit={this.onCommentsSubmit}/>
                         </Panel>
-                        <Panel header="Upload your H1B Documents" key="4">
+                        <Panel header="Upload your H1B Documents" key="4" disabled={!business.step4.showAccordion} forceRender={business.step4.showAccordion}>
                                 <H1bDocumentsPrep {...this.props} onAccordionSubmit={this.onAccordionSubmit} onCommentsSubmit={this.onCommentsSubmit} />
                         </Panel>
-                        <Panel header="Submitted Documents Review by HR" key="5">
+                        <Panel header="Submitted Documents Review by HR" key="5" disabled={!business.step5.showAccordion} forceRender={business.step5.showAccordion}>
                                 <H1bDocumentsHRReview {...this.props} onAccordionSubmit={this.onAccordionSubmit} onCommentsSubmit={this.onCommentsSubmit}/>
                         </Panel>
-                        <Panel header="Send Reviewed Documents to Attorney" key="6">
+                        <Panel header="Send Reviewed Documents to Attorney" key="6" disabled={!business.step6.showAccordion} forceRender={business.step6.showAccordion}>
                                 <AttorneyReceivedDocs {...this.props} onAccordionSubmit={this.onAccordionSubmit} onCommentsSubmit={this.onCommentsSubmit}/>
                         </Panel>
-                        <Panel header="Documents Reviewed by Attorney" key="7">
+                        <Panel header="Documents Reviewed by Attorney" key="7" disabled={!business.step7.showAccordion} forceRender={business.step7.showAccordion}>
                                 <AttorneyReviewedDocs {...this.props} onAccordionSubmit={this.onAccordionSubmit} onCommentsSubmit={this.onCommentsSubmit}/>
                         </Panel>
-                        <Panel header="Documents accepted by Attorney" key="8">
+                        <Panel header="Documents accepted by Attorney" key="8" disabled={!business.step8.showAccordion} forceRender={business.step8.showAccordion}>
                                 <AttorneyFilesPetiton {...this.props} onAccordionSubmit={this.onAccordionSubmit} onCommentsSubmit={this.onCommentsSubmit}/>
                         </Panel>
                         <Panel header="Attorney files the petition with USCIS and shares the FEDEX Number" key="9">
