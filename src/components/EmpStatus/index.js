@@ -2,14 +2,16 @@ import React, {Component} from 'react';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import InlineError from '../messages/InlineError';
-import { Steps, Timeline, Tag, Form, Button, message, Card, Layout, Tabs, Collapse, Input, Select, Radio, Row, Col } from 'antd';
+import { Steps,Popconfirm, Timeline, Tag, Form, Button, message, Card, Layout, Tabs, Collapse, Input, Select, Radio, Row, Col } from 'antd';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import EmpStatusModalWindow from './EmpStatusModalWindow';
 import WorkLocationModalWindow from './WorkLocationModalWindow';
+import RolesRespModalWindow from './RolesRespModalWindow';
+import DocsChecklistModalWindow from './DocsChecklistModalWindow';
+
 
 const Step = Steps.Step;
-
 const { Header, Footer, Sider, Content } = Layout;
 const TabPane = Tabs.TabPane;
 const Panel = Collapse.Panel;
@@ -21,30 +23,31 @@ class EmpStatus extends Component {
     constructor(props) {
         super(props);
         this.state = {   
-                commentsVisible:false,  
-                rrVsble:false,   
-                workLocationVisible:false,          
-                current: 0,
-                taskData:{
-                    business:{
-                        step1:{
-                            taskName:"Employee",
-                            taskActive: true,
-                            isTaskCompleted:false,
-                            isTaskDependent:false,
-                            dependencyReason:"",
-                            actionAssignedTo:"Akash",
-                            verifiedWrkLocation:false,
-                            offerLetterSigned:false,
-                            vendorLetterSubmitted:false,
-                            clientLetterSubmitted:false,
-                            rolesRespSubmittedByEmp:false,
-                            rolesRespDraft:"",
-                            vendorLetterStatus: "approved",
-                            clientLetterStatus: "waiting",
-                            submittedAllH4DocsByEmp: false,
-                            submittedAllH4DepDocsByEmp: false,
-                            submittedAllH1bDocsByEmp: false,
+            commentsVisible:false,  
+            rrVsble:false,   
+            workLocationVisible:false,          
+            current: 0,
+            taskData:{
+                business:{
+                    step1:{
+                        taskName:"From Employee",
+                        taskActive: true,
+                        isTaskCompleted:false,
+                        isTaskDependent:false,
+                        dependencyReason:"",
+                        actionAssignedTo:"Akash",
+                        verifiedWrkLocation:false,
+                        offerLetterSigned:false,
+                        vendorLetterSubmitted:false,
+                        clientLetterSubmitted:false,
+                        rolesRespSubmittedByEmp:false,
+                        rolesRespDraft:"",
+                        vendorLetterStatus: "approved",
+                        clientLetterStatus: "waiting",
+                        submittedAllH4DocsByEmp: false,
+                        submittedAllH4DepDocsByEmp: false,
+                        submittedAllH1bDocsByEmp: false,
+                        empDetails:{
                             empId: moment().valueOf(),
                             firstName: 'itemFN',
                             lastName: 'itemLN',
@@ -106,27 +109,36 @@ class EmpStatus extends Component {
                                 isTaskPending:false,
                                 isTaskCompleted:false,            
                             }
-                        },
-                        step2:{
-                            taskName:"Recruiter",
-                            taskActive: true,
-                            actionAssignedTo:"Akash",                           
-                            empSignedOfferLetter:"",
-                            projectStartDate:"",
-                            placementDate:"",
-                            applicationType:"type1",
-                            urgentSituation:"",                            
-                            docsCollectingStartDate:"",
-                            employerRelationDocuments: "yes",
-                            vendorLetterStatus: "approved",
-                            clientLetterStatus: "waiting",
-                            empVerifiedWrkLocation:"",
-                            rectrSentPlacDet:"",
-                            rectrSentVenAgreeSignedCopy:"",
-                        },
-                        step3:{
+                        }
+                    },
+                    step2:{
+                        taskName:"From Recruiter",
+                        taskActive: true,
+                        isTaskCompleted:false,
+                        isTaskDependent:false,
+                        showAccordion:true,
+                        dependencyReason:"",
+                        actionAssignedTo:"Akash",                           
+                        empSignedOfferLetter:"",
+                        projectStartDate:"",
+                        placementDate:"",
+                        applicationType:"type1",
+                        urgentSituation:"",                            
+                        docsCollectingStartDate:"",
+                        employerRelationDocuments: "yes",
+                        vendorLetterStatus: "approved",
+                        clientLetterStatus: "waiting",
+                        empVerifiedWrkLocation:"",
+                        rectrSentPlacDet:"",
+                        rectrSentVenAgreeSignedCopy:"",
+                    },
+                    step3:{
                         taskName:"LCA",
                         taskActive: true,
+                        isTaskCompleted:false,
+                        isTaskDependent:false,
+                        showAccordion:true,
+                        dependencyReason:"",
                         actionAssignedTo:"Akash",
                         dependencies:"",
                         empVerWorkLocation:"",
@@ -153,74 +165,101 @@ class EmpStatus extends Component {
                         taskCompletedTotalTime:"",
                         taskStartedTotalTime:"",
                         lcaSentToEmployee:true    
-                        },
-                        step4:{
-                            taskName:"H1bDocumentsPrep",
-                            taskActive: true,
-                            actionAssignedTo:"Akash",
-                            dependencies:"",
-                            recvdVendorLtrFrmEmp: true,  
-                            tmStRecvdVendorLtrFrmEmp:"",  
-                            tmEdRecvdVendorLtrFrmEmp:"",        
-                            recvdClntLtrFrmEmp: true,
-                            tmStRecvdClntLtrFrmEmp:"",
-                            tmEdRecvdClntLtrFrmEmp:"",
-                            otherPendngDocs:"",
-                            tmStOtherPendngDocs:"",
-                            tmEdOtherPendngDocs:"",        
-                            jobTitleIsCorrect:"",
-                            empHasDependents:"",
-                            recvdAllH4DocsFrmEmp: false,
-                            tmStRecvdAllH4DocsFrmEmp:"",
-                            tmEdRecvdAllH4DocsFrmEmp:"",
-                            recvdAllH4DepDocsFrmEmp: false,
-                            tmStRecvdAllH4DepDocsFrmEmp:"",
-                            tmEdRecvdAllH4DepDocsFrmEmp:"",  
-                            recvdAllH1bDocsFrmEmp: false,
-                            tmStRecvdAllH1bDocsFrmEmp:"",
-                            tmEdRecvdAllH1bDocsFrmEmp:"",        
-                        },
-                        step5:{
-                        taskName:"H1bDocumentsHRReview",
+                    },
+                    step4:{
+                        taskName:"H1bDocumentsPrep",
                         taskActive: true,
                         actionAssignedTo:"Akash",
+                        isTaskCompleted:false,
+                        isTaskDependent:false,
+                        showAccordion:true,
+                        dependencyReason:"",
                         dependencies:"",
-                        hrRecvdAllDocsAndReviewdFromEmp: true,
-                        tmStHrRecvdAllDocsAndReviewdFromEmp:"",
-                        tmEdHrRecvdAllDocsAndReviewdFromEmp:"",
-                        },
-                        step6:{
-                        taskName:"AttorneyReceivedDocs",
+                        recvdVendorLtrFrmEmp: true,  
+                        tmStRecvdVendorLtrFrmEmp:"",  
+                        tmEdRecvdVendorLtrFrmEmp:"",        
+                        recvdClntLtrFrmEmp: true,
+                        tmStRecvdClntLtrFrmEmp:"",
+                        tmEdRecvdClntLtrFrmEmp:"",
+                        otherPendngDocs:"",
+                        tmStOtherPendngDocs:"",
+                        tmEdOtherPendngDocs:"",        
+                        jobTitleIsCorrect:"",
+                        empHasDependents:"",
+                        recvdAllH4DocsFrmEmp: false,
+                        tmStRecvdAllH4DocsFrmEmp:"",
+                        tmEdRecvdAllH4DocsFrmEmp:"",
+                        recvdAllH4DepDocsFrmEmp: false,
+                        tmStRecvdAllH4DepDocsFrmEmp:"",
+                        tmEdRecvdAllH4DepDocsFrmEmp:"",  
+                        recvdAllH1bDocsFrmEmp: false,
+                        tmStRecvdAllH1bDocsFrmEmp:"",
+                        tmEdRecvdAllH1bDocsFrmEmp:"",  
+                        anyPendingDocuments:false,
+                        pendingDocumentsList:"",
+                        dueDateFrPendgDocs:"",  
+                        hrRecvdAllDocsFromEmp: true,
+                        tmStHrRecvdAllDocsFromEmp:"",
+                        tmEdHrRecvdAllDocsFromEmp:"",
+                        hrApprovesTheDocsReceived:false,
+                        tmStHrHRApprovesTheDocsReceived:"",
+                        tmEdHrHRApprovesTheDocsReceived:"",
+                        hrSentDocsToAttorney:false,
+                        tmStHrHRSentDocsToAttorney:"",
+                        tmEdHrHRSentDocsToAttorney:"",                    
+                    },                    
+                    step5:{
+                        taskName:"Attorney",
                         taskActive: true,
                         actionAssignedTo:"Akash",
+                        isTaskCompleted:false,
+                        isTaskDependent:false,
+                        showAccordion:true,
+                        dependencyReason:"",
                         dependencies:"",
                         attroneyReceivedAllDocsFromBusiness:false,
                         tmStAttroneyReceivedAllDocsFromBusiness:"",
                         tmEdAttroneyReceivedAllDocsFromBusiness:"",
-                        },
-                        step7:{
-                        taskName:"AttorneyReviewedDocs",
-                        taskActive: true,
-                        actionAssignedTo:"Akash",
-                        dependencies:"",
                         attroneyReviewedAllDocsFromBusiness:true,
                         tmStAttroneyReceivedAllDocsFromBusiness:"",
                         tmEdAttroneyReceivedAllDocsFromBusiness:"",
-                        },
-                        step8:{
-                        taskName:"AttorneyFilesPetiton",
-                        taskActive: true,
-                        actionAssignedTo:"Akash",
-                        dependencies:"",
+                        attorneyApprovesDocsReceivd:false,
+                        tmStAttorneyApprovesDocsReceivd:"",
+                        tmEdAttorneyApprovesDocsReceivd:"",
+                        anyPendingDocuments:false,
+                        pendingDocumentsList:"",
+                        dueDateFrPendgDocs:"",  
                         attroneyFilesPetiton:true,
                         tmStAttroneyFilesPetiton:"",
                         tmEdAttroneyFilesPetiton:"",
                         attroneyUpdatedFedexNumber:false,
                         tmStAttroneyUpdatedFedexNumber:"",
                         tmEdAttroneyUpdatedFedexNumber:"",
-                        },
+                        mailTrackingNumberOfPetition:"",
+                        petitionReceiptNumber:"",
+                        isPremiumProcessing:false,
+                        expectedStatusChangeDate:"",
+                    },
+                    step6:{
+                        taskName:"PetitionStatus",
+                        taskActive: true,
+                        isTaskCompleted:false,
+                        isTaskDependent:false,
+                        showAccordion:true,
+                        dependencyReason:"",
+                        actionAssignedTo:"Akash",
+                        dependencies:"",
+                        petitionStatusChangeDate:"",
+                        isPetitionStatusChanged:false,
+                        isPetitionApproved:false,
+                        isRFEReceivedForPetition:false,
+                        receivedRFEReason:"",
+                        isRFEAnswered:false,
+                        isRFEApproved:false,
+                        isRFEDocsSent:false                           
                     }
-                },                
+                }
+            },                
             errors: {
                 "empId":"",
                 "firstName": "",
@@ -316,6 +355,10 @@ class EmpStatus extends Component {
         this.setState({workLocationVisible: true});
     }
 
+    onRRBtnClicked = () =>{
+        this.setState({rrVsble: true});
+    }
+
     render() {   
         const steps = [{
                 title: 'First',
@@ -328,9 +371,9 @@ class EmpStatus extends Component {
                 content: 'Third-content',
           }];      
         const { current,  errors, commentsVisible, workLocationVisible, rrVsble } = this.state;
-        const { workLocation }  = this.state.taskData.business.step1.workInfo;
-        const { clientAddress} = this.state.taskData.business.step1.clientInfo;
-        const { clientInfo, vendorInfo } = this.state.taskData.business.step1; 
+        const { workLocation }  = this.state.taskData.business.step1.empDetails.workInfo;
+        const { clientAddress} = this.state.taskData.business.step1.empDetails.clientInfo;
+        const { clientInfo, vendorInfo } = this.state.taskData.business.step1.empDetails; 
         const { business }  = this.state.taskData;
         const { step1, step2, step3, step4, step5, step6, step7, step8, }  = this.state.taskData.business;
 
@@ -338,7 +381,8 @@ class EmpStatus extends Component {
             <Layout>
                  {commentsVisible && (<EmpStatusModalWindow {...this.props} isVisible={commentsVisible} onHandleCommentsModalCanceledClicked={this.onHandleCommentsModalCanceledClicked}  onHandleCommentsModalOkClicked={this.onHandleCommentsModalOkClicked}/>)}   
                  {workLocationVisible && (<WorkLocationModalWindow {...this.props} business={business} isVisible={workLocationVisible} onHandleWorkLocationModalCanceledClicked={this.onHandleWorkLocationModalCanceledClicked}  onHandleWorkLocationModalOkClicked={this.onHandleWorkLocationModalOkClicked}/>)}   
-                 {workLocationVisible && (<WorkLocationModalWindow {...this.props} business={business} isVisible={workLocationVisible} onHandleWorkLocationModalCanceledClicked={this.onHandleWorkLocationModalCanceledClicked}  onHandleWorkLocationModalOkClicked={this.onHandleWorkLocationModalOkClicked}/>)}   
+                 {rrVsble && (<RolesRespModalWindow {...this.props} isVisible={rrVsble} rolesRespDraft={step1.rolesRespDraft} onHnleRRMdlCnclClckd={this.onHnleRRMdlCnclClckd}  onHnleRRMdlOkClckd={this.onHnleRRMdlOkClckd}/>)}   
+                 {rrVsble && (<DocsChecklistModalWindow {...this.props} isVisible={rrVsble} rolesRespDraft={step1.rolesRespDraft} onHnleRRMdlCnclClckd={this.onHnleRRMdlCnclClckd}  onHnleRRMdlOkClckd={this.onHnleRRMdlOkClckd}/>)}   
                 <Header className="zero-padding">
                     <Row>
                         <Col xs={6} sm={6} md={6} lg={6} xl={6}>                               
@@ -373,35 +417,37 @@ class EmpStatus extends Component {
                                             <Timeline.Item>Client Letter Status {step1.clientLetterStatus}</Timeline.Item>
                                             <Timeline.Item>Vendor Letter Submitted {step1.vendorLetterSubmitted}</Timeline.Item>
                                             <Timeline.Item>Client Letter Submitted {step1.clientLetterSubmitted}</Timeline.Item>                                                                                        
-                                            <Timeline.Item>Roles Responsibilities Submitted by Employee: <b>{step1.rolesRespSubmittedByEmp ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>                                           
+                                            <Timeline.Item>Roles Responsibilities Submitted by Employee: <b>{step1.rolesRespSubmittedByEmp ? 'COMPLETED': 'NOT COMPLETED' }</b><button onClick={this.onRRBtnClicked}>Show Responsibilities</button></Timeline.Item>                                           
+                                            <Timeline.Item>All of the Employee's H1 Documents Received?: <b>{step1.submittedAllH1bDocsByEmp ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>                                                                                        
                                             <Timeline.Item>All of the Employee's H4 Documents Received?: <b>{step1.submittedAllH4DocsByEmp ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
                                             <Timeline.Item>All of the Employee's H4 Dep Documents Received?: <b>{step1.submittedAllH4DepDocsByEmp ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
-                                            <Timeline.Item>All of the Employee's H1 Documents Received?: <b>{step1.submittedAllH1bDocsByEmp ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>                                                                                        
+                                            <Timeline.Item>
+                                                <div>
+                                                    All of the Employee's H4 Dep Documents Received?: <b>{step4.anyPendingDocuments  ? 'COMPLETED': 'NOT COMPLETED' }</b> 
+                                                    <Popconfirm placement="left" title={step4.pendingDocumentsList} okText="Okay">
+                                                        <Button>Show Pending Documents</Button>
+                                                    </Popconfirm>                                          
+                                                </div>
+                                                </Timeline.Item>                                             
                                     </Timeline>
                                     </Card>)}
                                 {(current === 1) &&(<Card>
                                     <Timeline>
-                                            <Timeline.Item>Roles Responsibilities Verified: <b>{business.step3.rolesRespVerified? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
-                                            <Timeline.Item>Info Updated to portal by Business:<b> {business.step3.infoUptdToPortalByBiz? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>                                           
-                                            <Timeline.Item>Review of Uncertified LCA: <b>{business.step3.reviewUnCertLCA? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
-                                            <Timeline.Item>LCA Filed for Certification:<b> {business.step3.lcaFiledForCert? 'COMPLETED': 'NOT COMPLETED'}</b></Timeline.Item>
-                                            <Timeline.Item>LCA Sent to Employee: <b>{business.step3.lcaSentToEmployee? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
-                                            <Timeline.Item>Is Recruiter Information Submitted?: <b>{business.step2.taskActive ? 'NOT COMPLETED': 'COMPLETED' }</b></Timeline.Item>
-                                            <Timeline.Item>Employee's Documents Reviewed by HR?: <b>{business.step5.hrRecvdAllDocsAndReviewdFromEmp ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
-                                            <Timeline.Item>Did Attorney Receive All Documents from Business?: <b>{business.step6.attroneyReceivedAllDocsFromBusiness ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
-                                            <Timeline.Item>Did Attorney Review All Documents from Business?: <b>{business.step7.attroneyReviewedAllDocsFromBusiness ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
-                                            <Timeline.Item>Did Attorney File for Petition?: <b>{business.step8.attroneyFilesPetiton ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
-                                            <Timeline.Item>Did Attorney Update Fedex Number?: <b>{business.step8.attroneyUpdatedFedexNumber ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>Roles Responsibilities Verified: <b>{step3.rolesRespVerified? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>Info Updated to portal by Business:<b> {step3.infoUptdToPortalByBiz? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>                                           
+                                            <Timeline.Item>Review of Uncertified LCA: <b>{step3.reviewUnCertLCA? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>LCA Filed for Certification:<b> {step3.lcaFiledForCert? 'COMPLETED': 'NOT COMPLETED'}</b></Timeline.Item>
+                                            <Timeline.Item>LCA Sent to Employee: <b>{step3.lcaSentToEmployee? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>Employee's Documents Reviewed by HR for H1b filing?: <b>{step5.hrRecvdAllDocsAndReviewdFromEmp ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>Did Attorney Receive All Documents from Business for H1b filing?: <b>{step6.attroneyReceivedAllDocsFromBusiness ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>Did Attorney Review All Documents from Business for H1b filing?: <b>{step7.attroneyReviewedAllDocsFromBusiness ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>Did Attorney File for Petition?: <b>{step8.attroneyFilesPetiton ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>Did Attorney Update Fedex Number?: <b>{step8.attroneyUpdatedFedexNumber ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
                                     </Timeline>
                                     </Card>)}
                                 {(current === 2) &&(<Card>
                                         <Timeline>
-                                            <Timeline.Item>Roles Responsibilities Submitted by Employee: <b>{business.step3.rolesRespSubmittedByEmp ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
-                                            <Timeline.Item>Roles Responsibilities Verified: <b>{business.step3.rolesRespVerified? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
-                                            <Timeline.Item>Info Updated to portal by Business:<b> {business.step3.infoUptdToPortalByBiz? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
-                                            <Timeline.Item>Review of Uncertified LCA: <b>{business.step3.reviewUnCertLCA? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
-                                            <Timeline.Item>LCA Filed for Certification:<b> {business.step3.lcaFiledForCert? 'COMPLETED': 'NOT COMPLETED'}</b></Timeline.Item>
-                                            <Timeline.Item>LCA Sent to Employee: <b>{business.step3.lcaSentToEmployee? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            
                                         </Timeline>
                                     </Card>)}                                                      
                             </div>                        

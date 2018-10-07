@@ -8,23 +8,16 @@ class RolesRespModalWindow extends Component {
     constructor(props) {
         super(props);    
         this.state = {
-            taskSelected:{}            
+            rolesRespText:""
         }    
     }
     componentDidUpdate(prevProps, prevState, snapshot){        
     };
     componentDidMount() {        
+        const rolesRespText = this.props.rolesRespDraft; 
+        this.setState({rolesRespText:this.props.rolesRespText});
     };
-    static getDerivedStateFromProps(nextProps, prevState) {                       
-        if(nextProps.isUserLoggedIn){
-            if(nextProps.taskSelected){
-                if(Object.keys(nextProps.taskSelected).length > 0){
-                    return { taskSelected :  nextProps.taskSelected };
-                }        
-            }
-        }              
-        return null;
-    };
+    
     handleOk = (e) => {
        
     }
@@ -32,15 +25,19 @@ class RolesRespModalWindow extends Component {
     handleCancel = (e) => {
        
     }
+    onRolesRespTextChange = (e) => { 
+        let rolesRespText = this.state.rolesRespText;
+        rolesRespText = e.target.value;
+        return this.setState({rolesRespText});
+    };
     render() {         
-        const { comments } = this.state.taskSelected;
+        const { rolesRespText } = this.state;
         return ( 
             <div>
                 <Row>
                     <Col>                            
-                        <Modal title="Comments" visible={this.props.isVisible} onOk={this.handleOk} onCancel={this.handleCancel}>                                
-                                        
-                            
+                        <Modal title="Roles and Responsibilities" visible={this.props.isVisible} onOk={this.handleOk} onCancel={this.handleCancel}>                                                                        
+                            <TextArea placeholder="Enter Roles and Responsibities here" autosize={{ minRows: 2, maxRows: 200 }} onChange={this.onRolesRespTextChange} value={rolesRespText}/>
                         </Modal>                        
                     </Col>
                 </Row>
