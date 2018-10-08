@@ -24,7 +24,8 @@ class EmpStatus extends Component {
         super(props);
         this.state = {   
             commentsVisible:false,  
-            rrVsble:false,   
+            rrVsble:false,
+            dListVsble:false,   
             workLocationVisible:false,          
             current: 0,
             taskData:{
@@ -44,6 +45,7 @@ class EmpStatus extends Component {
                         rolesRespDraft:"",
                         vendorLetterStatus: "approved",
                         clientLetterStatus: "waiting",
+                        docsListH1bH4H4DepsByEmp:"",
                         submittedAllH4DocsByEmp: false,
                         submittedAllH4DepDocsByEmp: false,
                         submittedAllH1bDocsByEmp: false,
@@ -306,7 +308,8 @@ class EmpStatus extends Component {
     static getDerivedStateFromProps(nextProps, prevState) {
         if(nextProps.taskData){
             if(Object.keys(nextProps.taskData).length > 0){
-                return { taskData :  nextProps.taskData };
+                const cusTaskData = Object.assign(prevState.taskData, nextProps.taskData)
+                return { taskData :  cusTaskData };
             }
         }
         return null;
@@ -331,6 +334,18 @@ class EmpStatus extends Component {
 
     onCommentsButtonClicked = () =>{
         this.setState({commentsVisible: true});
+    }
+
+    onHnleDLMdlCnclClckd = () => {
+        this.setState({dListVsble: false});
+    }
+
+    onHnleDLMdlOkClckd = () => {
+        this.setState({dListVsble: false});
+    }
+
+    onShwDLBtnClicked = () =>{
+        this.setState({dListVsble: true});
     }
 
     onHnleRRMdlCnclClckd = () => {
@@ -358,8 +373,9 @@ class EmpStatus extends Component {
     onRRBtnClicked = () =>{
         this.setState({rrVsble: true});
     }
-
-    render() {   
+    
+    render() {
+         
         const steps = [{
                 title: 'First',
                 content: 'First-content',
@@ -370,19 +386,19 @@ class EmpStatus extends Component {
                 title: 'Third',
                 content: 'Third-content',
           }];      
-        const { current,  errors, commentsVisible, workLocationVisible, rrVsble } = this.state;
+        const { current,  errors, commentsVisible, workLocationVisible, rrVsble, dListVsble } = this.state;
         const { workLocation }  = this.state.taskData.business.step1.empDetails.workInfo;
         const { clientAddress} = this.state.taskData.business.step1.empDetails.clientInfo;
         const { clientInfo, vendorInfo } = this.state.taskData.business.step1.empDetails; 
         const { business }  = this.state.taskData;
-        const { step1, step2, step3, step4, step5, step6, step7, step8, }  = this.state.taskData.business;
+        const { step1, step2, step3, step4, step5, step6 }  = this.state.taskData.business;
 
         return ( 
             <Layout>
                  {commentsVisible && (<EmpStatusModalWindow {...this.props} isVisible={commentsVisible} onHandleCommentsModalCanceledClicked={this.onHandleCommentsModalCanceledClicked}  onHandleCommentsModalOkClicked={this.onHandleCommentsModalOkClicked}/>)}   
-                 {workLocationVisible && (<WorkLocationModalWindow {...this.props} business={business} isVisible={workLocationVisible} onHandleWorkLocationModalCanceledClicked={this.onHandleWorkLocationModalCanceledClicked}  onHandleWorkLocationModalOkClicked={this.onHandleWorkLocationModalOkClicked}/>)}   
+                 {workLocationVisible && (<WorkLocationModalWindow {...this.props} business={business} isVisible={workLocationVisible} onHandleWorkLocationModalCanceledClicked={this.onHandleWorkLocationModalCanceledClicked}  onHandleWorkLocationModalOkClicked={this.onHandleWorkLocationModalOkClicked}/>)}                   
                  {rrVsble && (<RolesRespModalWindow {...this.props} isVisible={rrVsble} rolesRespDraft={step1.rolesRespDraft} onHnleRRMdlCnclClckd={this.onHnleRRMdlCnclClckd}  onHnleRRMdlOkClckd={this.onHnleRRMdlOkClckd}/>)}   
-                 {rrVsble && (<DocsChecklistModalWindow {...this.props} isVisible={rrVsble} rolesRespDraft={step1.rolesRespDraft} onHnleRRMdlCnclClckd={this.onHnleRRMdlCnclClckd}  onHnleRRMdlOkClckd={this.onHnleRRMdlOkClckd}/>)}   
+                 {dListVsble && (<DocsChecklistModalWindow {...this.props} isVisible={dListVsble} docsListH1bH4H4DepsByEmp={step1.docsListH1bH4H4DepsByEmp} onHnleDLMdlCnclClckd={this.onHnleDLMdlCnclClckd}  onHnleDLMdlOkClckd={this.onHnleDLMdlOkClckd}/>)}   
                 <Header className="zero-padding">
                     <Row>
                         <Col xs={6} sm={6} md={6} lg={6} xl={6}>                               
@@ -417,7 +433,8 @@ class EmpStatus extends Component {
                                             <Timeline.Item>Client Letter Status {step1.clientLetterStatus}</Timeline.Item>
                                             <Timeline.Item>Vendor Letter Submitted {step1.vendorLetterSubmitted}</Timeline.Item>
                                             <Timeline.Item>Client Letter Submitted {step1.clientLetterSubmitted}</Timeline.Item>                                                                                        
-                                            <Timeline.Item>Roles Responsibilities Submitted by Employee: <b>{step1.rolesRespSubmittedByEmp ? 'COMPLETED': 'NOT COMPLETED' }</b><button onClick={this.onRRBtnClicked}>Show Responsibilities</button></Timeline.Item>                                           
+                                            <Timeline.Item>Roles Responsibilities Submitted by Employee: <b>{step1.rolesRespSubmittedByEmp ? 'COMPLETED': 'NOT COMPLETED' }</b><button onClick={this.onRRBtnClicked}>Show Responsibilities</button></Timeline.Item>                                                                                       
+                                            <Timeline.Item>List of H1b H4 and H4 Dependents Documents required : <button onClick={this.onShwDLBtnClicked}>Show Docs List</button></Timeline.Item>                                                                                        
                                             <Timeline.Item>All of the Employee's H1 Documents Received?: <b>{step1.submittedAllH1bDocsByEmp ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>                                                                                        
                                             <Timeline.Item>All of the Employee's H4 Documents Received?: <b>{step1.submittedAllH4DocsByEmp ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
                                             <Timeline.Item>All of the Employee's H4 Dep Documents Received?: <b>{step1.submittedAllH4DepDocsByEmp ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
@@ -438,11 +455,12 @@ class EmpStatus extends Component {
                                             <Timeline.Item>Review of Uncertified LCA: <b>{step3.reviewUnCertLCA? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
                                             <Timeline.Item>LCA Filed for Certification:<b> {step3.lcaFiledForCert? 'COMPLETED': 'NOT COMPLETED'}</b></Timeline.Item>
                                             <Timeline.Item>LCA Sent to Employee: <b>{step3.lcaSentToEmployee? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
-                                            <Timeline.Item>Employee's Documents Reviewed by HR for H1b filing?: <b>{step5.hrRecvdAllDocsAndReviewdFromEmp ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
-                                            <Timeline.Item>Did Attorney Receive All Documents from Business for H1b filing?: <b>{step6.attroneyReceivedAllDocsFromBusiness ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
-                                            <Timeline.Item>Did Attorney Review All Documents from Business for H1b filing?: <b>{step7.attroneyReviewedAllDocsFromBusiness ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
-                                            <Timeline.Item>Did Attorney File for Petition?: <b>{step8.attroneyFilesPetiton ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
-                                            <Timeline.Item>Did Attorney Update Fedex Number?: <b>{step8.attroneyUpdatedFedexNumber ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>Employee's Documents Reviewed by HR for H1b filing?: <b>{step4.hrRecvdAllDocsFromEmp ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>Employee's Documents Reviewed by HR for H1b filing?: <b>{step4.hrApprovesTheDocsReceived ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>Did Attorney Receive All Documents from Business for H1b filing?: <b>{step5.attroneyReceivedAllDocsFromBusiness ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>Did Attorney Review All Documents from Business for H1b filing?: <b>{step5.attroneyReviewedAllDocsFromBusiness ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>Did Attorney File for Petition?: <b>{step5.attroneyFilesPetiton ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
+                                            <Timeline.Item>Did Attorney Update Fedex Number?: <b>{step5.attroneyUpdatedFedexNumber ? 'COMPLETED': 'NOT COMPLETED' }</b></Timeline.Item>
                                     </Timeline>
                                     </Card>)}
                                 {(current === 2) &&(<Card>

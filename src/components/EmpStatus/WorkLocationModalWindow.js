@@ -253,10 +253,14 @@ class WorkLocationModalWindow extends Component {
     handleCancel = (e) => {
         this.props.onHandleWorkLocationModalCanceledClicked();
     }
-    render() {                 
-        const { workLocation }  = this.state.business.step1.workInfo;
-        const { clientAddress} = this.state.business.step1.clientInfo;
-        const { clientInfo, vendorInfo } = this.state.business.step1;  
+    render() {     
+        console.log("hii sndbfa");   
+        console.log("hii sndbfa");   
+        console.log("hii sndbfa");   
+        console.log("hii sndbfa");              
+        const { workLocation }  = this.state.business.step1.empDetails.workInfo;
+        const { clientAddress} = this.state.business.step1.empDetails.clientInfo;
+        const { clientInfo, vendorInfo } = this.state.business.step1.empDetails;  
         const { errors } = this.state;
         return ( 
             <div>
