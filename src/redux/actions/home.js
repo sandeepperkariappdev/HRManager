@@ -7,6 +7,25 @@ export const getTaskListSuccessResponse = (response) => ({
     response
 })
 
+export const getBusinessUsersListSuccessResponse = (response) => ({
+    type:Types.GET_BUSINESS_USERS_LIST_SUCCESS_RESPONSE,
+    response
+})
+
+export const signupUser = (user) => ({
+    type: Types.SIGNUP_USER,
+    user
+});
+  
+export const createBusinessuserServerSuccess = (response) => ({
+    type: Types.SIGNUP_USER_SERVER_RESPONSE_SUCCESS,
+    response
+});
+  
+export const createBusinessuserServerFailure = (response) => ({
+    type: Types.SIGNUP_USER_SERVER_RESPONSE_ERROR,
+    response
+});
 
 export const getUpdatedTaskListSuccessResponse = (response) => ({
     type:Types.GET_UPDATED_EMPLOYEE_LIST_SUCCESS_RESPONSE,

@@ -269,7 +269,8 @@ const initialState = {
   isServerRespReceived:false,
   taskList:[],
   error: '',
-  taskSelected:{}
+  taskSelected:{},
+  signUpUsersList:[]
 }
 
 const handleEmployeeListServerResponseSuccess = (state, action) => {
@@ -292,6 +293,15 @@ const handleEmployeeListServerResponseError = (state, action) => {
   return {...newState};
 }
 
+const handleSignupServerResponseError = (state, action) => {
+  let newState = {};
+  return {...newState};
+}
+
+const handleSignupServerResponseSuccess = (state, action) => {
+  let newState = {};
+  return {...newState};
+}
 const getTaskByEmpId = (state, action) => {
   let newState = {};
   newState = Object.assign({}, state, { taskSelected : Object.assign( taskObject, state.taskList.find((item) => {      
@@ -305,6 +315,12 @@ export default (state = initialState, action) => {
     switch(action.type){
       case Type.GET_EMPLOYEE_LIST :
            return { ...state};
+      case Type.SIGNUP_USER_SERVER_RESPONSE_ERROR :
+            return handleSignupServerResponseError(state, action);
+      case Type.SIGNUP_USER_SERVER_RESPONSE_SUCCESS :
+            return handleSignupServerResponseSuccess(state, action);        
+      case Type.SIGNUP_USER :
+            return {...state};
       case Type.GET_TASK_BY_EMPID :
            return getTaskByEmpId(state, action);
       case Type.GET_UPDATED_EMPLOYEE_LIST_SUCCESS_RESPONSE:

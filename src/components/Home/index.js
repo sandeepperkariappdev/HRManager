@@ -50,13 +50,13 @@ class Home extends Component {
                             <Col xs={14} sm={14} md={14} lg={14} xl={14}>   
                                 <h3 className="color-white">Home</h3>
                             </Col>
+                            
                         </Row>
                     </Header>
                     <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>                    
                         <Row>
-                            <Col xs={14} sm={14} md={14} lg={14} xl={14}>   
-                                <Link to={{pathname: "/createTask"}}>Create Task</Link>
-                            </Col>
+                            <Col span={8}> <Link to={{pathname: "/createTask"}}>Create Task</Link> </Col>
+                            <Col span={8} offset={8}><Link to={{pathname: "/signup"}}>Signup Business User</Link></Col>
                         </Row>
                         <Card>
                             <Tabs defaultActiveKey="1" >

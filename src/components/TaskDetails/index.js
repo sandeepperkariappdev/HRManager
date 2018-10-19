@@ -154,18 +154,16 @@ class TaskDetails extends Component {
                         <Panel header="Send Reviewed Documents to Attorney" key="6" disabled={!business.step6.showAccordion} forceRender={business.step6.showAccordion}>
                                 <AttorneyReceivedDocs {...this.props} onAccordionSubmit={this.onAccordionSubmit} onCommentsSubmit={this.onCommentsSubmit}/>
                         </Panel>
-                        <Panel header="Documents Reviewed by Attorney" key="7" disabled={!business.step7.showAccordion} forceRender={business.step7.showAccordion}>
+                        {/* <Panel header="Documents Reviewed by Attorney" key="7" disabled={!business.step7.showAccordion} forceRender={business.step7.showAccordion}>
                                 <AttorneyReviewedDocs {...this.props} onAccordionSubmit={this.onAccordionSubmit} onCommentsSubmit={this.onCommentsSubmit}/>
                         </Panel>
                         <Panel header="Documents accepted by Attorney" key="8" disabled={!business.step8.showAccordion} forceRender={business.step8.showAccordion}>
                                 <AttorneyFilesPetiton {...this.props} onAccordionSubmit={this.onAccordionSubmit} onCommentsSubmit={this.onCommentsSubmit}/>
-                        </Panel>
+                        </Panel> 
                         <Panel header="Attorney files the petition with USCIS and shares the FEDEX Number" key="9">
-
                         </Panel>
                         <Panel header="User receives the FEDEX number for the petition filed" key="10">
-
-                        </Panel>
+                        </Panel>*/}
                     </Collapse>
                     </Card>
                     <Card>

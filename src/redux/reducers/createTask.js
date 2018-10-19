@@ -22,8 +22,7 @@ const handleEmployeeInfoServerResponseError= (state, action) => {
 
 
 export default(state = initialState, action) => {
-    switch(action.type){
-        
+    switch(action.type){        
     case Type.CREATE_TASK :
         return Object.assign({}, state, {isTaskCreated : false, error:'' });
     case Type.CREATE_TASK_SERVER_RESPONSE_SUCCESS :

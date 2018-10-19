@@ -5,7 +5,7 @@ import * as Types from '../actions/types';
 import { eventChannel } from 'redux-saga';
 import {loginUserSuccess, loginUserFailure, validateUserSuccess, validateUserFailure} from '../actions/auth';
 import {createTaskServerSuccess, createTaskServerFailure} from '../actions/createTask';
-import {getTaskListSuccessResponse, getUpdatedTaskListSuccessResponse} from '../actions/home';
+import {getTaskListSuccessResponse, getUpdatedTaskListSuccessResponse, createBusinessuserServerSuccess, createBusinessuserServerFailure} from '../actions/home';
 //import { db, auth } from '../firebase';
 import firebase from '../../firebase';
 
@@ -80,6 +80,22 @@ function* createTaskItemSaga() {
     }
 }
 
+
+function insertNewBusinessuser(item) {
+  const newItemRef = database.ref('businessusers').push();
+  return newItemRef.set(item);
+}
+
+function* signupBusinessUserItemSaga() {
+  const action = yield take(Types.SIGNUP_USER);
+  try {
+      const response = yield call(insertNewBusinessuser, action.user);
+      yield put(createBusinessuserServerSuccess(response));
+  } catch (error) {
+    yield put(createBusinessuserServerFailure(error));
+  }
+}
+
 function createEventChannelToGetData(){
   const listener = eventChannel(
       emit => {
@@ -99,6 +115,27 @@ function* getTasksList(){
       yield put(getTaskListSuccessResponse(item));    
   }
 }
+
+function createEventChannelToGetBusinessUsers(){
+  const listener = eventChannel(
+      emit => {
+          database.ref('businessusers')
+          .on('value', data => emit(data.val()));
+              return () => database.ref('businessusers').off(listener);
+      }
+  );
+  return listener;
+}
+
+// Get Incentive Transaction List
+function* getBusinessUsersList(){
+  const getDataChannel = createEventChannelToGetBusinessUsers();
+  while(true) {
+      const item = yield take(getDataChannel); 
+      yield put(getTaskListSuccessResponse(item));    
+  }
+}
+
 
 const insertEmployeeInfoRegistrationData = (task) => {
     const tasksRef = database.ref('tasks').push();
@@ -150,10 +187,12 @@ function* validateLoggedInUser(action){
 } 
 
 export default function* rootSaga(params){
-  yield takeEvery(Types.LOGIN_USER, fetchLoginUser);
+  yield takeEvery(Types.LOGIN_USER, fetchLoginUser);  
   yield takeEvery(Types.LOGOUT_USER, fetchLogoutUser);
   yield all([takeLatest(Types.GET_EMPLOYEE_LIST, getTasksList)]);
   yield all([takeLatest(Types.TASK_DETAILS_SAVE_DATABASE, submitSelectedTask)]);
+  yield all([takeLatest(Types.GET_BUSINESS_USERS_LIST, getBusinessUsersList)]);
   yield fork(createTaskItemSaga);
+  yield fork(signupBusinessUserItemSaga);  
   yield all([takeLatest(Types.LOGIN_USER_SERVER_RESPONSE_SUCCESS,  validateLoggedInUser)]);
 }
