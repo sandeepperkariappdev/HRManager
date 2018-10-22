@@ -24,6 +24,16 @@ export const validateUserFailure = (response) => ({
   response
 })
 
+export const getBusinessUsersList = () => ({
+  type:Types.GET_BUSINESS_USERS_LIST  
+})
+
+export const getBusinessUsersListSuccessResponse = (response) => ({
+  type:Types.GET_BUSINESS_USERS_LIST_SERVER_RESPONSE_SUCCESS,
+  response  
+})
+
+
 export const loginUserFailure = (response) => ({
   type:Types.LOGIN_USER_SERVER_RESPONSE_ERROR,
   response

@@ -5,7 +5,7 @@ import  Validator from 'validator';
 import { Link } from "react-router-dom";
 import { Form, Input, Button, Card, Checkbox } from 'antd';
 import InlineError from '../messages/InlineError';
-import { loginUser } from "../../redux/actions/auth";
+import { loginUser, getBusinessUsersList } from "../../redux/actions/auth";
 
 class Login extends Component {
     
@@ -22,6 +22,10 @@ class Login extends Component {
             loading: false,
             errors: {}
       }
+    }
+
+    componentDidMount(){
+        //this.props.dispatch(getBusinessUsersList());
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -44,6 +48,7 @@ class Login extends Component {
         const errors = this.validate(this.state.data);
         this.setState({errors});        
         if(Object.keys(errors).length===0){
+            this.props.dispatch(getBusinessUsersList());
             this.props.dispatch(loginUser(this.state.data.email, this.state.data.password));
         }
     };

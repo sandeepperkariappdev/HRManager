@@ -3,11 +3,8 @@ import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import {  Layout, Row, Col, Card, Radio, Button, Collapse, Tabs, Input, InputNumber, Select, Upload, Icon } from 'antd';
 import { Link } from "react-router-dom";
-import { logoutUser } from "../../redux/actions/auth";
 import H1bDocumentsHRReview from './H1bDocumentsHRReview';
 import AttorneyReceivedDocs from './AttorneyReceivedDocs';
-import AttorneyReviewedDocs from './AttorneyReviewedDocs';
-import AttorneyFilesPetiton from './AttorneyFilesPetiton';
 import H1bDocumentsPrep from './H1bDocumentsPrep';
 import FromEmployee from './FromEmployee';
 import Recruiter from './Recruiter';
@@ -100,9 +97,6 @@ class TaskDetails extends Component {
     }
 
     render() {
-        console.log("hello");
-        console.log("hello");
-        console.log("hello");
         const { modeHor } = 'top';        
         const { modeVer } = 'left';
         const radioStyle = { display: 'block', height: '30px', lineHeight: '30px'};
@@ -142,16 +136,16 @@ class TaskDetails extends Component {
                                 <Recruiter {...this.props} onAccordionSubmit={this.onAccordionSubmit}
                                 onTaskInfoSubmit={this.onTaskInfoSubmit} onCommentsSubmit={this.onCommentsSubmit}/>
                         </Panel>
-                        <Panel header="LCA Documents and Application for Certification" key="3" disabled={!business.step3.showAccordion} forceRender={business.step3.showAccordion}>
+                        <Panel header="LCA" key="3" disabled={!business.step3.showAccordion} forceRender={business.step3.showAccordion}>
                                 <LCA {...this.props} onAccordionSubmit={this.onAccordionSubmit} onCommentsSubmit={this.onCommentsSubmit}/>
                         </Panel>
-                        <Panel header="Upload your H1B Documents" key="4" disabled={!business.step4.showAccordion} forceRender={business.step4.showAccordion}>
+                        <Panel header="H1b Documents Preparation " key="4" disabled={!business.step4.showAccordion} forceRender={business.step4.showAccordion}>
                                 <H1bDocumentsPrep {...this.props} onAccordionSubmit={this.onAccordionSubmit} onCommentsSubmit={this.onCommentsSubmit} />
                         </Panel>
-                        <Panel header="Submitted Documents Review by HR" key="5" disabled={!business.step5.showAccordion} forceRender={business.step5.showAccordion}>
+                        <Panel header="Attorney" key="5" disabled={!business.step5.showAccordion} forceRender={business.step5.showAccordion}>
                                 <H1bDocumentsHRReview {...this.props} onAccordionSubmit={this.onAccordionSubmit} onCommentsSubmit={this.onCommentsSubmit}/>
                         </Panel>
-                        <Panel header="Send Reviewed Documents to Attorney" key="6" disabled={!business.step6.showAccordion} forceRender={business.step6.showAccordion}>
+                        <Panel header="Petition Status" key="6" disabled={!business.step6.showAccordion} forceRender={business.step6.showAccordion}>
                                 <AttorneyReceivedDocs {...this.props} onAccordionSubmit={this.onAccordionSubmit} onCommentsSubmit={this.onCommentsSubmit}/>
                         </Panel>
                         {/* <Panel header="Documents Reviewed by Attorney" key="7" disabled={!business.step7.showAccordion} forceRender={business.step7.showAccordion}>

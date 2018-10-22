@@ -15,8 +15,8 @@ const TabPane = Tabs.TabPane;
 const SubMenu = Menu.SubMenu;
 
 const options = [
-    { label: 'yes', value: 'yes' },
-    { label: 'no', value: 'no' },
+    { label: 'yes', value: 'true' },
+    { label: 'no', value: 'false' },
   ];
 
 const h1applicationType = [

@@ -6,8 +6,8 @@ import { Form, Input, Row, Col, Button, DatePicker, Radio, Card} from 'antd';
 import ModalDisplay from '../ModalDisplay';
 
 const options = [
-    { label: 'yes', value: 'yes' },
-    { label: 'no', value: 'no' },
+    { label: 'yes', value: 'true' },
+    { label: 'no', value: 'false' },
   ];
 
 
@@ -20,13 +20,22 @@ class AttorneyReceivedDocs extends Component {
         super(props);
         this.state = { 
             step6:{
-                taskName:"AttorneyReceivedDocs",
+                taskName:"PetitionStatus",
                 taskActive: true,
+                isTaskCompleted:false,
+                isTaskDependent:false,
+                showAccordion:true,
+                dependencyReason:"",
                 actionAssignedTo:"Akash",
                 dependencies:"",
-                attroneyReceivedAllDocsFromBusiness:"",
-                tmStAttroneyReceivedAllDocsFromBusiness:"",
-                tmEdAttroneyReceivedAllDocsFromBusiness:"",
+                petitionStatusChangeDate:"",
+                isPetitionStatusChanged:false,
+                isPetitionApproved:false,
+                isRFEReceivedForPetition:false,
+                receivedRFEReason:"",
+                isRFEAnswered:false,
+                isRFEApproved:false,
+                isRFEDocsSent:false   
               },
               comments:[{
                 taskMsg:"",

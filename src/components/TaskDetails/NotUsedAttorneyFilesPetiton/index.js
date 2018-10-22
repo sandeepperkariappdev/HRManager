@@ -6,8 +6,8 @@ import { Form, Input, Row, Col, Button, DatePicker, Radio, Card} from 'antd';
 import ModalDisplay from '../ModalDisplay';
 
 const options = [
-    { label: 'yes', value: 'yes' },
-    { label: 'no', value: 'no' },
+    { label: 'yes', value: 'true' },
+    { label: 'no', value: 'false' },
   ];
 
 
@@ -16,18 +16,21 @@ const RadioGroup = Radio.Group;
 const { TextArea } = Input;
 
 
-class AttorneyReviewedDocs extends Component {
+class AttorneyFilesPetiton extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            step7:{
-                taskName:"AttorneyReviewedDocs",
+            step8:{
+                taskName:"AttorneyFilesPetiton",
                 taskActive: true,
                 actionAssignedTo:"Akash",
                 dependencies:"",
-                attroneyReviewedAllDocsFromBusiness:"",
-                tmStAttroneyReceivedAllDocsFromBusiness:"",
-                tmEdAttroneyReceivedAllDocsFromBusiness:"",
+                attroneyFilesPetiton:"",
+                tmStAttroneyFilesPetiton:"",
+                tmEdAttroneyFilesPetiton:"",
+                attroneyUpdatedFedexNumber:"",
+                tmStAttroneyUpdatedFedexNumber:"",
+                tmEdAttroneyUpdatedFedexNumber:"",
               },
               comments:[{
                 taskMsg:"",
@@ -46,22 +49,21 @@ class AttorneyReviewedDocs extends Component {
 
     componentDidMount() {
         if(this.props.taskSelected.business){
-            let step7 =  this.props.taskSelected.business.step7;
-            this.setState({step7})
+            let step8 =  this.props.taskSelected.business.step8;
+            this.setState({step8})
         }
+    }   
+    
+    onModalClick = (dataFromModal) => {
+        this.setState({
+            ...this.state, comments: dataFromModal,
+        });
     }
 
-
-    // onModalClick = (dataFromModal) => {
-    //     this.setState({
-    //         ...this.state, comments: dataFromModal,
-    //     });
-    // }
-
-    onAttorneyReviewedChange= (e) => {
-        let step7 = Object.assign({}, this.state.step7);
-        step7[e.target.name] = [e.target.value];
-        return this.setState({step7});
+    onAttorneyFilesPetitionChange= (e) => {
+        let step8 = Object.assign({}, this.state.step8);
+        step8[e.target.name] = [e.target.value];
+        return this.setState({step8});
     };
 
     onCancelButtonClicked = () => {
@@ -72,41 +74,47 @@ class AttorneyReviewedDocs extends Component {
     }
     onHandleModalOkClicked = (dataFromModal) => {
         this.setState({visible: false});
-        this.props.onAccordionSubmit(this.state.step7, "step7");
+        this.props.onAccordionSubmit(this.state.step8, "step8");
         this.props.onCommentsSubmit(dataFromModal);
     }
 
     onHandleModalCanceledClicked = () => {
         this.setState({visible: false});
-        this.props.onAccordionSubmit(this.state.step7, "step7");
+        this.props.onAccordionSubmit(this.state.step8, "step8");
     }
+
     render() { 
-        const { step7, errors, visible } = this.state;
+        const { step8, errors, visible } = this.state;
 
         return ( 
             <div>
                     <Form>  
                         <Row>
                             <Col>
-                                <Card title="Attorney Reviewed Docs">
+                                <Card title="Attorney Files Petition">
                                     
                                     <Form.Item error={!!errors.dependencies}  label="Any Dependencies?">                                        
-                                        <RadioGroup name="dependencies" options={options} onChange={this.onAttorneyReviewedChange} />
+                                        <RadioGroup name="dependencies" options={options} onChange={this.onAttorneyFilesPetitionChange} />
                                         {errors.dependencies && <InlineError text= {errors.dependencies}/>}
                                     </Form.Item>
 
-                                    <Form.Item error={!!errors.attroneyReviewedAllDocsFromBusiness}  label="Did Attorney Review all documents?">                                        
-                                        <RadioGroup name="attroneyReviewedAllDocsFromBusiness" options={options} onChange={this.onAttorneyReviewedChange} />
-                                        {errors.attroneyReviewedAllDocsFromBusiness && <InlineError text= {errors.attroneyReviewedAllDocsFromBusiness}/>}
+                                    <Form.Item error={!!errors.attroneyFilesPetiton}  label="Did Attorney File the Petition?">                                        
+                                        <RadioGroup name="attroneyFilesPetiton" options={options} onChange={this.onAttorneyFilesPetitionChange} />
+                                        {errors.attroneyFilesPetiton && <InlineError text= {errors.attroneyFilesPetiton}/>}
+                                    </Form.Item>
+
+                                    <Form.Item error={!!errors.attroneyUpdatedFedexNumber}  label="Did Attorney Update Fedex Number?">                                        
+                                        <RadioGroup name="attroneyUpdatedFedexNumber" options={options} onChange={this.onAttorneyFilesPetitionChange} />
+                                        {errors.attroneyUpdatedFedexNumber && <InlineError text= {errors.attroneyUpdatedFedexNumber}/>}
                                     </Form.Item>
 
                                 </Card>
                             </Col>
                         </Row>
-
                         <Row>
                             <ModalDisplay {...this.props} isVisible={visible} onHandleModalOkClicked={this.onHandleModalOkClicked} onHandleModalCanceledClicked = {this.onHandleModalCanceledClicked} />                      
-                        </Row>                        
+                        </Row>
+                        <br />
                         <Row>
                             <Col>   
                                 <div>
@@ -121,4 +129,4 @@ class AttorneyReviewedDocs extends Component {
     }
 }
  
-export default AttorneyReviewedDocs;
+export default AttorneyFilesPetiton;

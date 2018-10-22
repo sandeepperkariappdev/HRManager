@@ -3,9 +3,9 @@ import * as Types from '../actions/types';
 //import {getCreateIncTranSucResp, getUpdatedIncTranSucResp, getIncTranListSucResp}  from "../actions/Incentives";
 //import * as API from '../config';
 import { eventChannel } from 'redux-saga';
-import {loginUserSuccess, loginUserFailure, validateUserSuccess, validateUserFailure} from '../actions/auth';
+import {loginUserSuccess, loginUserFailure, validateUserSuccess, getBusinessUsersListSuccessResponse, validateUserFailure} from '../actions/auth';
 import {createTaskServerSuccess, createTaskServerFailure} from '../actions/createTask';
-import {getTaskListSuccessResponse, getUpdatedTaskListSuccessResponse, createBusinessuserServerSuccess, createBusinessuserServerFailure} from '../actions/home';
+import {getTaskListSuccessResponse,getUpdatedTaskListSuccessResponse, createBusinessuserServerSuccess, createBusinessuserServerFailure} from '../actions/home';
 //import { db, auth } from '../firebase';
 import firebase from '../../firebase';
 
@@ -132,7 +132,7 @@ function* getBusinessUsersList(){
   const getDataChannel = createEventChannelToGetBusinessUsers();
   while(true) {
       const item = yield take(getDataChannel); 
-      yield put(getTaskListSuccessResponse(item));    
+      yield put(getBusinessUsersListSuccessResponse(item));    
   }
 }
 

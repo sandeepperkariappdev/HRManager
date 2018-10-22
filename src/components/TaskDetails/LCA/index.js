@@ -7,8 +7,8 @@ import { Form, Input, Row, Col, Button, DatePicker, Radio, Card} from 'antd';
 import ModalDisplay from '../ModalDisplay';
 
 const options = [
-    { label: 'yes', value: 'yes' },
-    { label: 'no', value: 'no' },
+    { label: 'yes', value: 'true' },
+    { label: 'no', value: 'false' },
   ];
 
 
@@ -72,22 +72,22 @@ class LCA extends Component {
     //     });
     // }
 
-    onAppliedLCADateChange = (e, date) => {
-        this.setState({
-            ...this.state.step3, appliedDateLCA: moment(date).valueOf(),
-        });
+    onAppliedLCADateChange = (e, date) => {        
+        let step3 = Object.assign({}, this.state.step3);
+        step3["appliedDateLCA"] = moment(date).valueOf();
+        return this.setState({step3});
     };
 
-    onApprovedLCADateChange = (e, date) => {
-        this.setState({
-            ...this.state.step3, approvedDateLCA: moment(date).valueOf(),
-        });
+    onApprovedLCADateChange = (e, date) => {        
+        let step3 = Object.assign({}, this.state.step3);
+        step3["approvedDateLCA"] = moment(date).valueOf();
+        return this.setState({step3});
     };
 
-    onExpectedApprovalDateChange = (e, date) => {
-        this.setState({
-            ...this.state.step3, expectedApprovalDate: moment(date).valueOf(),
-        });
+    onExpectedApprovalDateChange = (e, date) => {        
+        let step3 = Object.assign({}, this.state.step3);
+        step3["expectedApprovalDate"] = moment(date).valueOf();
+        return this.setState({step3});
     };
 
     onLCAChange = (e) => {

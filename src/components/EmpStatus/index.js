@@ -465,7 +465,14 @@ class EmpStatus extends Component {
                                     </Card>)}
                                 {(current === 2) &&(<Card>
                                         <Timeline>
-                                            
+                                            <Timeline.Item>Petition Status Change Date: <b>{step6.petitionStatusChangeDate}</b></Timeline.Item>
+                                            <Timeline.Item>Is Petition Status Changed: <b>{step6.isPetitionStatusChanged}</b></Timeline.Item>
+                                            <Timeline.Item>Is Petition Approved: <b>{step6.isPetitionApproved}</b></Timeline.Item>
+                                            <Timeline.Item>Is RFE Received For Petition: <b>{step6.isRFEReceivedForPetition}</b></Timeline.Item>
+                                            <Timeline.Item>Received RFE Reason: <b>{step6.receivedRFEReason}</b></Timeline.Item>
+                                            <Timeline.Item>Is RFE Answered: <b>{step6.isRFEAnswered}</b></Timeline.Item>
+                                            <Timeline.Item>Is RFE Approved: <b>{step6.isRFEApproved}</b></Timeline.Item>
+                                            <Timeline.Item>Is RFE Docs Sent: <b>{step6.isRFEDocsSent}</b></Timeline.Item>                                        
                                         </Timeline>
                                     </Card>)}                                                      
                             </div>                        

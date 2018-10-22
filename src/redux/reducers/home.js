@@ -35,85 +35,86 @@ const taskObject = {
   business:{
     step1:{
       taskName:"From Employee",
-                        taskActive: true,
-                        isTaskCompleted:false,
-                        isTaskDependent:false,
-                        dependencyReason:"",
-                        actionAssignedTo:"Akash",
-                        verifiedWrkLocation:false,
-                        offerLetterSigned:false,
-                        vendorLetterSubmitted:false,
-                        clientLetterSubmitted:false,
-                        rolesRespSubmittedByEmp:false,
-                        rolesRespDraft:"",
-                        vendorLetterStatus: "approved",
-                        clientLetterStatus: "waiting",
-                        submittedAllH4DocsByEmp: false,
-                        submittedAllH4DepDocsByEmp: false,
-                        submittedAllH1bDocsByEmp: false,
-                        empDetails:{
-                            empId: "",
-                            firstName: 'itemFN',
-                            lastName: 'itemLN',
-                            primaryEmailId: 'test1emp@rsrit.com',
-                            secondaryEmailId: 'itemLN.itemFN@rsrit.com',
-                            phoneNo: '1112223333',
-                            contDetails:{
-                                address1:'ghvvhvh',
-                                address2:'ebvhjvf',
-                                city:'fwgvkvhb',
-                                state:'bhkqh',
-                                zipCode:'666644'
-                            },
-                            workInfo:{
-                                workLocation:{
-                                    address1:'ghvechjg',
-                                    address2:'qfwehbkfbkh',
-                                    city:'fewhj',
-                                    state:'fqbhkj',
-                                    zipCode:'555544'
-                                },
-                            },                
-                            clientInfo:{
-                                clientName: 'vggvhj',
-                                managerName:'bjhww',
-                                clientAddress:{
-                                    address1:'qerqert',
-                                    address2:'ipuo',
-                                    city:'tytyu',
-                                    state:'rrrc',
-                                    zipCode:'888877',
-                                    },
-                            },                
-                            vendorInfo:{                    
-                                vendorName: 'jdksnfsa',
-                                vendorContact: '12342134123',
-                                venContName:'jknlbhjbjk',
-                                venContPhone:'123412341234',
-                            },                
-                            recruiter:{
-                                    projectStartDate: '',
-                                    empSignedOfferLetter:false,
-                                    placementDate: '',
-                                    urgentSituation:'',
-                                    applicationType:'H1b',
-                                    docsCollectingStartDate: '',
-                                    employerRelationDocuments: '',
-                                    vendorLetterStatus: '',
-                                    clientLetterStatus: '',
-                                    empVerifiedWrkLocation:false,
-                                    rectrSentPlacDate: '',
-                                    rectrSentVenAgreeSignedCopy:'',
-                            },
-                            taskInfo:{      
-                                taskPrioirty:"1",
-                                applicationType:"H1b",
-                                taskCreatedDate:"",  
-                                isTaskCreated:true,
-                                isTaskPending:false,
-                                isTaskCompleted:false,            
-                            }
-                        }
+      taskActive: true,
+      showAccordion:true,
+      isTaskCompleted:false,
+      isTaskDependent:false,
+      dependencyReason:"",
+      actionAssignedTo:"Akash",
+      verifiedWrkLocation:false,
+      offerLetterSigned:false,
+      vendorLetterSubmitted:false,
+      clientLetterSubmitted:false,
+      rolesRespSubmittedByEmp:false,
+      rolesRespDraft:"",
+      vendorLetterStatus: "approved",
+      clientLetterStatus: "waiting",
+      submittedAllH4DocsByEmp: false,
+      submittedAllH4DepDocsByEmp: false,
+      submittedAllH1bDocsByEmp: false,
+      empDetails:{
+          empId: "",
+          firstName: 'itemFN',
+          lastName: 'itemLN',
+          primaryEmailId: 'test1emp@rsrit.com',
+          secondaryEmailId: 'itemLN.itemFN@rsrit.com',
+          phoneNo: '1112223333',
+          contDetails:{
+              address1:'ghvvhvh',
+              address2:'ebvhjvf',
+              city:'fwgvkvhb',
+              state:'bhkqh',
+              zipCode:'666644'
+          },
+          workInfo:{
+              workLocation:{
+                  address1:'ghvechjg',
+                  address2:'qfwehbkfbkh',
+                  city:'fewhj',
+                  state:'fqbhkj',
+                  zipCode:'555544'
+              },
+          },                
+          clientInfo:{
+              clientName: 'vggvhj',
+              managerName:'bjhww',
+              clientAddress:{
+                  address1:'qerqert',
+                  address2:'ipuo',
+                  city:'tytyu',
+                  state:'rrrc',
+                  zipCode:'888877',
+                  },
+          },                
+          vendorInfo:{                    
+              vendorName: 'jdksnfsa',
+              vendorContact: '12342134123',
+              venContName:'jknlbhjbjk',
+              venContPhone:'123412341234',
+          },                
+          recruiter:{
+                  projectStartDate: '',
+                  empSignedOfferLetter:false,
+                  placementDate: '',
+                  urgentSituation:'',
+                  applicationType:'H1b',
+                  docsCollectingStartDate: '',
+                  employerRelationDocuments: '',
+                  vendorLetterStatus: '',
+                  clientLetterStatus: '',
+                  empVerifiedWrkLocation:false,
+                  rectrSentPlacDate: '',
+                  rectrSentVenAgreeSignedCopy:'',
+          },
+          taskInfo:{      
+              taskPrioirty:"1",
+              applicationType:"H1b",
+              taskCreatedDate:"",  
+              isTaskCreated:true,
+              isTaskPending:false,
+              isTaskCompleted:false,            
+          }
+      }
     },
     step2:{
       taskName:"From Recruiter",
@@ -269,8 +270,7 @@ const initialState = {
   isServerRespReceived:false,
   taskList:[],
   error: '',
-  taskSelected:{},
-  signUpUsersList:[]
+  taskSelected:{}
 }
 
 const handleEmployeeListServerResponseSuccess = (state, action) => {

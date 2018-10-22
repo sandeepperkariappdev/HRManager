@@ -6,8 +6,8 @@ import { Form, Input, Row, Col, Button, DatePicker, Radio, Card} from 'antd';
 import ModalDisplay from '../ModalDisplay';
 
 const options = [
-    { label: 'yes', value: 'yes' },
-    { label: 'no', value: 'no' },
+    { label: 'yes', value: 'true' },
+    { label: 'no', value: 'false' },
   ];
 
 
@@ -20,13 +20,36 @@ class H1bDocumentsHRReview extends Component {
         super(props);
         this.state = { 
             step5:{
-                taskName:"H1bDocumentsHRReview",
+                taskName:"Attorney",
                 taskActive: true,
                 actionAssignedTo:"Akash",
+                isTaskCompleted:false,
+                isTaskDependent:false,
+                showAccordion:true,
+                dependencyReason:"",
                 dependencies:"",
-                hrRecvdAllDocsAndReviewdFromEmp:"",
-                tmStHrRecvdAllDocsAndReviewdFromEmp:"",
-                tmEdHrRecvdAllDocsAndReviewdFromEmp:"",
+                attroneyReceivedAllDocsFromBusiness:false,
+                tmStAttroneyReceivedAllDocsFromBusiness:"",
+                tmEdAttroneyReceivedAllDocsFromBusiness:"",
+                attroneyReviewedAllDocsFromBusiness:true,
+                tmStAttroneyReceivedAllDocsFromBusiness:"",
+                tmEdAttroneyReceivedAllDocsFromBusiness:"",
+                attorneyApprovesDocsReceivd:false,
+                tmStAttorneyApprovesDocsReceivd:"",
+                tmEdAttorneyApprovesDocsReceivd:"",
+                anyPendingDocuments:false,
+                pendingDocumentsList:"",
+                dueDateFrPendgDocs:"",  
+                attroneyFilesPetiton:true,
+                tmStAttroneyFilesPetiton:"",
+                tmEdAttroneyFilesPetiton:"",
+                attroneyUpdatedFedexNumber:false,
+                tmStAttroneyUpdatedFedexNumber:"",
+                tmEdAttroneyUpdatedFedexNumber:"",
+                mailTrackingNumberOfPetition:"",
+                petitionReceiptNumber:"",
+                isPremiumProcessing:false,
+                expectedStatusChangeDate:"",
               },
               comments:[{
                 taskMsg:"",
@@ -79,7 +102,21 @@ class H1bDocumentsHRReview extends Component {
     }
     render() { 
         const { step5, errors, visible } = this.state;
+/*
+        attroneyReceivedAllDocsFromBusiness:false,
+        attroneyReviewedAllDocsFromBusiness:true,
+        attorneyApprovesDocsReceivd:false,
+        anyPendingDocuments:false,
 
+        pendingDocumentsList:"",
+        dueDateFrPendgDocs:"",  
+
+        attroneyFilesPetiton:true,
+        attroneyUpdatedFedexNumber:false,
+        mailTrackingNumberOfPetition:"",
+        petitionReceiptNumber:"",
+        isPremiumProcessing:false,
+        expectedStatusChangeDate:"",*/
         return ( 
             <div>
                     <Form>  
@@ -91,10 +128,32 @@ class H1bDocumentsHRReview extends Component {
                                         {errors.dependencies && <InlineError text= {errors.dependencies}/>}
                                     </Form.Item>
 
-                                    <Form.Item error={!!errors.hrRecvdAllDocsAndReviewdFromEmp}  label="Did HR Receive and Review all documents from Employee?">                                        
-                                        <RadioGroup name="hrRecvdAllDocsAndReviewdFromEmp" options={options} onChange={this.onH1BDocReviewChange} />
-                                        {errors.hrRecvdAllDocsAndReviewdFromEmp && <InlineError text= {errors.hrRecvdAllDocsAndReviewdFromEmp}/>}
+                                    <Form.Item error={!!errors.attroneyReceivedAllDocsFromBusiness}  label="Did Attorney Received all documents from Business?">                                        
+                                        <RadioGroup name="attroneyReceivedAllDocsFromBusiness" options={options} onChange={this.onH1BDocReviewChange} />
+                                        {errors.attroneyReceivedAllDocsFromBusiness && <InlineError text= {errors.attroneyReceivedAllDocsFromBusiness}/>}
                                     </Form.Item>
+
+                                    <Form.Item error={!!errors.attroneyReviewedAllDocsFromBusiness}  label="Did Attorney Reviewed all documents from Business?">                                        
+                                        <RadioGroup name="attroneyReviewedAllDocsFromBusiness" options={options} onChange={this.onH1BDocReviewChange} />
+                                        {errors.attroneyReviewedAllDocsFromBusiness && <InlineError text= {errors.attroneyReviewedAllDocsFromBusiness}/>}
+                                    </Form.Item>
+
+                                    <Form.Item error={!!errors.attorneyApprovesDocsReceivd}  label="Did Attorney Approves all documents Received from Business?">                                        
+                                        <RadioGroup name="attorneyApprovesDocsReceivd" options={options} onChange={this.onH1BDocReviewChange} />
+                                        {errors.attorneyApprovesDocsReceivd && <InlineError text= {errors.attorneyApprovesDocsReceivd}/>}
+                                    </Form.Item>
+
+
+                                    <Form.Item error={!!errors.anyPendingDocuments}  label="Any pending docuemtns to be Received from Business?">                                        
+                                        <RadioGroup name="anyPendingDocuments" options={options} onChange={this.onH1BDocReviewChange} />
+                                        {errors.anyPendingDocuments && <InlineError text= {errors.anyPendingDocuments}/>}
+                                    </Form.Item>
+
+                                    <Form.Item error={!!errors.attroneyFilesPetiton}  label="Attorney Files petition?">                                        
+                                        <RadioGroup name="anyPendingDocuments" options={options} onChange={this.onH1BDocReviewChange} />
+                                        {errors.attroneyFilesPetiton && <InlineError text= {errors.attroneyFilesPetiton}/>}
+                                    </Form.Item>
+
 
                                 </Card>
                             </Col>

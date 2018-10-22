@@ -7,11 +7,6 @@ export const getTaskListSuccessResponse = (response) => ({
     response
 })
 
-export const getBusinessUsersListSuccessResponse = (response) => ({
-    type:Types.GET_BUSINESS_USERS_LIST_SUCCESS_RESPONSE,
-    response
-})
-
 export const signupUser = (user) => ({
     type: Types.SIGNUP_USER,
     user

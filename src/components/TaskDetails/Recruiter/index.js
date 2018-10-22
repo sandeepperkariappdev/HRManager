@@ -8,8 +8,8 @@ import moment from 'moment';
 
 
 const options = [
-    { label: 'yes', value: 'yes' },
-    { label: 'no', value: 'no' },
+    { label: 'yes', value: 'true' },
+    { label: 'no', value: 'false' },
   ];
 
 const h1applicationType = [
@@ -104,11 +104,11 @@ class Recruiter extends Component {
     };
     onTaskInfoChange = (e) => {
         let taskInfo = Object.assign({}, this.state.taskInfo);
-        taskInfo.taskInfo[e.target.name] = e.target.value;
-        taskInfo.taskInfo["isTaskCreated"] = false;
-        taskInfo.taskInfo["isTaskPending"] = true;
-        taskInfo.taskInfo["isTaskCompleted"] = false;
-        taskInfo.taskInfo["taskCreatedDate"] = moment().valueOf();
+        taskInfo[e.target.name] = e.target.value;
+        taskInfo["isTaskCreated"] = false;
+        taskInfo["isTaskPending"] = true;
+        taskInfo["isTaskCompleted"] = false;
+        taskInfo["taskCreatedDate"] = moment().valueOf();
         return this.setState({taskInfo});
     };
     onPlacementDateChange = (e, date) => {
@@ -124,10 +124,10 @@ class Recruiter extends Component {
         return this.setState({step2});
     };
 
-    onRectrSentPlacDetChange = (e, date) => {
-        this.setState({
-            ...this.state.step2, rectrSentPlacDet: date,
-        });
+    onRectrSentPlacDetChange = (e, date) => {        
+        let step2 = Object.assign({}, this.state.step2);
+        step2["rectrSentPlacDet"] = moment(date).valueOf();
+        return this.setState({step2});
     };
 
     onCancelButtonClicked = () => {
