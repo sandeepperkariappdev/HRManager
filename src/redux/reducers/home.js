@@ -18,7 +18,8 @@ const taskObject = {
     taskCreatedDate:"", 
     isTaskCreated:"",
     isTaskPending:"",
-    isTaskCompleted:"",   
+    isTaskCompleted:"",  
+    taskstatus:""//Emp or Business or uscis 
   },
   empStatus:{
     curStatusMsg:"",

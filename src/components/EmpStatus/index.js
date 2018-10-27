@@ -42,7 +42,7 @@ class EmpStatus extends Component {
                         vendorLetterSubmitted:false,
                         clientLetterSubmitted:false,
                         rolesRespSubmittedByEmp:false,
-                        rolesRespDraft:"",
+                        rolesRespDraft:[{comments:""}],
                         vendorLetterStatus: "approved",
                         clientLetterStatus: "waiting",
                         docsListH1bH4H4DepsByEmp:"",
@@ -229,7 +229,7 @@ class EmpStatus extends Component {
                         tmStAttorneyApprovesDocsReceivd:"",
                         tmEdAttorneyApprovesDocsReceivd:"",
                         anyPendingDocuments:false,
-                        pendingDocumentsList:"",
+                        pendingDocumentsList:[{comments:"", date:""}],
                         dueDateFrPendgDocs:"",  
                         attroneyFilesPetiton:true,
                         tmStAttroneyFilesPetiton:"",
@@ -395,7 +395,7 @@ class EmpStatus extends Component {
 
         return ( 
             <Layout>
-                 {commentsVisible && (<EmpStatusModalWindow {...this.props} isVisible={commentsVisible} onHandleCommentsModalCanceledClicked={this.onHandleCommentsModalCanceledClicked}  onHandleCommentsModalOkClicked={this.onHandleCommentsModalOkClicked}/>)}   
+                 {commentsVisible && (<EmpStatusModalWindow {...this.props } taskSelected={this.state.taskData} isVisible={commentsVisible} onHandleCommentsModalCanceledClicked={this.onHandleCommentsModalCanceledClicked}  onHandleCommentsModalOkClicked={this.onHandleCommentsModalOkClicked}/>)}   
                  {workLocationVisible && (<WorkLocationModalWindow {...this.props} business={business} isVisible={workLocationVisible} onHandleWorkLocationModalCanceledClicked={this.onHandleWorkLocationModalCanceledClicked}  onHandleWorkLocationModalOkClicked={this.onHandleWorkLocationModalOkClicked}/>)}                   
                  {rrVsble && (<RolesRespModalWindow {...this.props} isVisible={rrVsble} rolesRespDraft={step1.rolesRespDraft} onHnleRRMdlCnclClckd={this.onHnleRRMdlCnclClckd}  onHnleRRMdlOkClckd={this.onHnleRRMdlOkClckd}/>)}   
                  {dListVsble && (<DocsChecklistModalWindow {...this.props} isVisible={dListVsble} docsListH1bH4H4DepsByEmp={step1.docsListH1bH4H4DepsByEmp} onHnleDLMdlCnclClckd={this.onHnleDLMdlCnclClckd}  onHnleDLMdlOkClckd={this.onHnleDLMdlOkClckd}/>)}   

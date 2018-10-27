@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Validator from 'validator';
 import InlineError from '../../messages/InlineError';
-import { Form, Input, Row, Col, Button, DatePicker, Radio, Card} from 'antd';
+import { Form, Input, Row, Col, Button, DatePicker, Radio, Popconfirm, Card} from 'antd';
 import ModalDisplay from '../ModalDisplay';
+import moment from 'moment';
 
 const options = [
     { label: 'yes', value: 'true' },
@@ -81,7 +82,7 @@ class H1bDocumentsHRReview extends Component {
 
     onH1BDocReviewChange = (e) => {
         let step5 = Object.assign({}, this.state.step5);
-        step5[e.target.name] = [e.target.value];
+        step5[e.target.name] = e.target.value;
         return this.setState({step5});
     };
     onCancelButtonClicked = () => {
@@ -100,6 +101,20 @@ class H1bDocumentsHRReview extends Component {
         this.setState({visible: false});
         this.props.onAccordionSubmit(this.state.step5, "step5");
     }
+
+    expectedStatusChangeDate = (e, date) => {        
+        let step5 = Object.assign({}, this.state.step5);
+        step5["expectedStatusChangeDate"] = moment(date).valueOf();
+        return this.setState({step5});
+    };
+
+    dueDateFrPendgDocs = (e, date) => {        
+        let step5 = Object.assign({}, this.state.step5);
+        step5["dueDateFrPendgDocs"] = moment(date).valueOf();
+        return this.setState({step5});
+    };
+
+
     render() { 
         const { step5, errors, visible } = this.state;
 /*
@@ -121,8 +136,8 @@ class H1bDocumentsHRReview extends Component {
             <div>
                     <Form>  
                         <Row>
-                            <Col>
-                                <Card title="H1B Documents Review">
+                        <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                                <Card >
                                     <Form.Item error={!!errors.dependencies}  label="Any Dependencies?">                                        
                                         <RadioGroup name="dependencies" options={options} onChange={this.onH1BDocReviewChange} />
                                         {errors.dependencies && <InlineError text= {errors.dependencies}/>}
@@ -148,13 +163,53 @@ class H1bDocumentsHRReview extends Component {
                                         <RadioGroup name="anyPendingDocuments" options={options} onChange={this.onH1BDocReviewChange} />
                                         {errors.anyPendingDocuments && <InlineError text= {errors.anyPendingDocuments}/>}
                                     </Form.Item>
-
+                                    
                                     <Form.Item error={!!errors.attroneyFilesPetiton}  label="Attorney Files petition?">                                        
-                                        <RadioGroup name="anyPendingDocuments" options={options} onChange={this.onH1BDocReviewChange} />
+                                        <RadioGroup name="attroneyFilesPetiton" options={options} onChange={this.onH1BDocReviewChange} />
                                         {errors.attroneyFilesPetiton && <InlineError text= {errors.attroneyFilesPetiton}/>}
                                     </Form.Item>
+                                    </Card>
+                                </Col>                                    
+                                    
+                                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                                <Card>
+                                    <Form.Item error={!!errors.attroneyUpdatedFedexNumber}  label="Attorney Updated Petition Tracking Number?">                                        
+                                        <RadioGroup name="attroneyUpdatedFedexNumber" options={options} onChange={this.onH1BDocReviewChange} />
+                                        {errors.attroneyUpdatedFedexNumber && <InlineError text= {errors.attroneyUpdatedFedexNumber}/>}
+                                    </Form.Item>
+                                    <Form.Item error={!!errors.mailTrackingNumberOfPetition}  label="Mail Tracking Number Of Petition?">                                        
+                                        <RadioGroup name="mailTrackingNumberOfPetition" options={options} onChange={this.onH1BDocReviewChange} />
+                                        {errors.mailTrackingNumberOfPetition && <InlineError text= {errors.mailTrackingNumberOfPetition}/>}
+                                    </Form.Item>
 
-
+                                    <Form.Item error={!!errors.petitionReceiptNumber}  label="Petition Receipt Number?">                                                                                
+                                        <Input placeholder="Petition Receipt Number" name="petitionReceiptNumber" onChange={this.onH1BDocReviewChange}/>   
+                                        {errors.petitionReceiptNumber && <InlineError text= {errors.petitionReceiptNumber}/>}
+                                    </Form.Item>
+                                    
+                                    <Form.Item error={!!errors.isPremiumProcessing}  label="Is Premium Processing?">                                        
+                                        <RadioGroup name="isPremiumProcessing" options={options} onChange={this.onH1BDocReviewChange} />
+                                        {errors.isPremiumProcessing && <InlineError text= {errors.isPremiumProcessing}/>}
+                                    </Form.Item>
+                                    
+                                    <Form.Item error={!!errors.expectedStatusChangeDate}  label="expectedStatusChangeDate?">                                          
+                                        <DatePicker onChange={this.expectedStatusChangeDate} placeholder= "Expected Status Change Date" defaultValue={moment(step5.expectedStatusChangeDate)} value={step5.expectedStatusChangeDate}/>
+                                        {errors.expectedStatusChangeDate && <InlineError text= {errors.expectedStatusChangeDate}/>}
+                                    </Form.Item>
+                                    
+                                    <Form.Item error={!!errors.dueDateFrPendgDocs}  label="dueDateFrPendgDocs">                                          
+                                        <DatePicker onChange={this.dueDateFrPendgDocs} placeholder="Due Date For Pending Docs" defaultValue={moment(step5.dueDateFrPendgDocs)} value={step5.dueDateFrPendgDocs}/>
+                                        {errors.dueDateFrPendgDocs && <InlineError text= {errors.dueDateFrPendgDocs}/>}
+                                    </Form.Item>
+                                    
+                                    <Form.Item>
+                                        <div>
+                                            Any Pending Documents ? : <b>{step5.pendingDocumentsList  ? 'COMPLETED': 'NOT COMPLETED' }</b> 
+                                            <Popconfirm placement="left" title={step5.pendingDocumentsList} okText="Okay">
+                                                <Button>Show Pending Documents</Button>
+                                            </Popconfirm>                                          
+                                        </div>                                                
+                                    </Form.Item>
                                 </Card>
                             </Col>
                         </Row>

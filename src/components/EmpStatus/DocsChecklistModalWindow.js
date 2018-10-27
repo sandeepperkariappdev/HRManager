@@ -26,11 +26,11 @@ class DocsChecklistModalWindow extends Component {
         return null;
     };
     handleOk = (e) => {
-       
+        this.props.onHnleDLMdlOkClckd();
     }
     
     handleCancel = (e) => {
-       
+        this.props.onHnleDLMdlCnclClckd();
     }
     render() {         
         const { comments } = this.state.taskSelected;
@@ -38,7 +38,7 @@ class DocsChecklistModalWindow extends Component {
             <div>
                 <Row>
                     <Col>                            
-                        <Modal title="Comments" visible={this.props.isVisible} onOk={this.handleOk} onCancel={this.handleCancel}>                                
+                        <Modal title="List of Documents" visible={this.props.isVisible} onOk={this.handleOk} onCancel={this.handleCancel}>                                
                                         
                             
                         </Modal>                        

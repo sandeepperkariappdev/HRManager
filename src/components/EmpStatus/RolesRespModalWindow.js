@@ -19,11 +19,11 @@ class RolesRespModalWindow extends Component {
     };
     
     handleOk = (e) => {
-       
+        this.props.onHnleRRMdlOkClckd();
     }
     
     handleCancel = (e) => {
-       
+        this.props.onHnleRRMdlCnclClckd();
     }
     onRolesRespTextChange = (e) => { 
         let rolesRespText = this.state.rolesRespText;

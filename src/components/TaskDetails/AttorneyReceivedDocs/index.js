@@ -95,17 +95,44 @@ class AttorneyReceivedDocs extends Component {
             <div>
                     <Form>  
                         <Row>
-                            <Col>
-                                <Card title="Attorney Received Docs">
-                                    
-                                    <Form.Item error={!!errors.dependencies}  label="Any Dependencies?">                                        
-                                        <RadioGroup name="dependencies" options={options} onChange={this.onAttorneyReceivedChange} />
-                                        {errors.dependencies && <InlineError text= {errors.dependencies}/>}
+                        <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                                <Card>                                                                  
+                                    <Form.Item error={!!errors.isPetitionStatusChanged}  label="Is Petition Status Changed?">                                        
+                                        <RadioGroup name="isPetitionStatusChanged" options={options} onChange={this.onAttorneyReceivedChange} />
+                                        {errors.isPetitionStatusChanged && <InlineError text= {errors.isPetitionStatusChanged}/>}
                                     </Form.Item>
 
-                                    <Form.Item error={!!errors.attroneyReceivedAllDocsFromBusiness}  label="Did Attorney Receive all documents from business?">                                        
-                                        <RadioGroup name="attroneyReceivedAllDocsFromBusiness" options={options} onChange={this.onAttorneyReceivedChange} />
-                                        {errors.attroneyReceivedAllDocsFromBusiness && <InlineError text= {errors.attroneyReceivedAllDocsFromBusiness}/>}
+                                    <Form.Item error={!!errors.isPetitionApproved}  label="Is Petition Approved ?">                                        
+                                        <RadioGroup name="isPetitionApproved" options={options} onChange={this.onAttorneyReceivedChange} />
+                                        {errors.isPetitionApproved && <InlineError text= {errors.isPetitionApproved}/>}
+                                    </Form.Item>
+
+                                    <Form.Item error={!!errors.isRFEReceivedForPetition}  label="Is RFE Received For Petition ?">                                        
+                                        <RadioGroup name="isRFEReceivedForPetition" options={options} onChange={this.onAttorneyReceivedChange} />
+                                        {errors.isRFEReceivedForPetition && <InlineError text= {errors.isRFEReceivedForPetition}/>}
+                                    </Form.Item>
+                                    </Card>
+                                </Col> 
+                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>                                  
+                                <Card>
+                                    <Form.Item error={!!errors.receivedRFEReason}  label="Received RFE Reason">                                                                                
+                                        <Input placeholder="Received RFE Reason" name="receivedRFEReason" onChange={this.onH1BDocReviewChange}/>   
+                                        {errors.receivedRFEReason && <InlineError text= {errors.receivedRFEReason}/>}
+                                    </Form.Item>
+                                    
+                                    <Form.Item error={!!errors.isRFEAnswered}  label="Is RFE Answered ?">                                        
+                                        <RadioGroup name="isRFEAnswered" options={options} onChange={this.onAttorneyReceivedChange} />
+                                        {errors.isRFEAnswered && <InlineError text= {errors.isRFEAnswered}/>}
+                                    </Form.Item>
+
+                                    <Form.Item error={!!errors.isRFEApproved}  label="Is RFE Approved ?">                                        
+                                        <RadioGroup name="isRFEApproved" options={options} onChange={this.onAttorneyReceivedChange} />
+                                        {errors.isRFEApproved && <InlineError text= {errors.isRFEApproved}/>}
+                                    </Form.Item>
+
+                                    <Form.Item error={!!errors.isRFEDocsSent}  label="Is RFE Docs Sent ?">                                        
+                                        <RadioGroup name="isRFEDocsSent" options={options} onChange={this.onAttorneyReceivedChange} />
+                                        {errors.isRFEDocsSent && <InlineError text= {errors.isRFEDocsSent}/>}
                                     </Form.Item>
 
                                 </Card>
