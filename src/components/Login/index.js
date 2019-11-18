@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import  Validator from 'validator';
 import { Link } from "react-router-dom";
-import { Form, Input, Button, Card, Checkbox } from 'antd';
+import { Form, Input, Button, Card, Checkbox, Row, Col } from 'antd';
 import InlineError from '../messages/InlineError';
 import { loginUser, getBusinessUsersList } from "../../redux/actions/auth";
 
@@ -64,22 +64,29 @@ class Login extends Component {
     render() { 
         const { data, errors } = this.state
         return ( 
-            <div>
-                <Card title="Login">
-                    <Form>
-                        <Form.Item error={!!errors.email}>
-                            <Input id="email" type="text" name="email" value= {data.email} onChange={this.onChange} placeholder="example@example.com" />
-                            {errors.email && <InlineError text= {errors.email}/>}
-                        </Form.Item>
-                        <Form.Item error={!!errors.password}>
-                                <Input id="password" type="password" name="password" value= {data.password} onChange={this.onChange} placeholder="Make it Secure" />
-                            {errors.password && <InlineError text= {errors.password}/>}
-                        </Form.Item>
-                        {/* <Checkbox name="isBusiness" checked={data.isBusiness} onChange={this.onChange}>Business</Checkbox> */}
-                        <Button type="primary" onClick={this.onSubmit}>Submit</Button>   
-                        {/* <p><Link to={{pathname: "/signup"}}>SignUp</Link></p> */}
-                    </Form>
-                </Card>
+            <div style={{ background: '#ECECEC', padding: '30px', height:'100%' }}>
+                <Row gutter={16}>
+                    <Col offset={8} span={8}>
+                        <img src="https://rsrit.com/wp-content/uploads/2017/12/logo_dark.png" alt="reliable" width="150px" height="50px"></img>
+                    </Col>
+                    <Col offset={8} span={8}>
+                        <Card title="Login">
+                            <Form>
+                                <Form.Item error={!!errors.email}>
+                                    <Input id="email" type="text" name="email" value= {data.email} onChange={this.onChange} placeholder="example@example.com" />
+                                    {errors.email && <InlineError text= {errors.email}/>}
+                                </Form.Item>
+                                <Form.Item error={!!errors.password}>
+                                        <Input id="password" type="password" name="password" value= {data.password} onChange={this.onChange} placeholder="Make it Secure" />
+                                    {errors.password && <InlineError text= {errors.password}/>}
+                                </Form.Item>
+                                {/* <Checkbox name="isBusiness" checked={data.isBusiness} onChange={this.onChange}>Business</Checkbox> */}
+                                <Button type="primary" onClick={this.onSubmit}>Submit</Button>   
+                                {/* <p><Link to={{pathname: "/signup"}}>SignUp</Link></p> */}
+                            </Form>
+                        </Card>
+                    </Col>
+                </Row>
             </div>
          );
     }
